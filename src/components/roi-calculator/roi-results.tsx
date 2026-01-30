@@ -42,7 +42,7 @@ export function RoiResults({
 
   return (
     <div className="space-y-8">
-      <h2 className="text-3xl font-semibold text-primary text-center">Resultados del ROI</h2>
+      <h2 className="text-3xl font-semibold text-primary text-center">Resultados</h2>
 
       <Card className="bg-card text-card-foreground shadow-md border-border">
         <CardHeader>
