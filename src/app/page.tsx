@@ -6,9 +6,6 @@ export default function RoiCalculatorPage() {
   return (
     <div className="min-h-screen bg-background text-foreground p-4 sm:p-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-primary mb-8 text-center">
-          Calculadora de ROI para IA Operations
-        </h1>
         <RoiCalculator />
       </div>
     </div>
