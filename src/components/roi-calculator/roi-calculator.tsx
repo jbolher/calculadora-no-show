@@ -79,7 +79,7 @@ export function RoiCalculator() {
   return (
     <Card className="bg-card text-card-foreground shadow-lg border-border">
       <CardHeader>
-        <CardTitle className="text-2xl text-primary">Calculadora de ROI</CardTitle>
+        <CardTitle className="text-2xl text-primary">Calculadora de No Show</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>

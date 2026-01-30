@@ -73,11 +73,11 @@ export function RoiResults({
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xl font-bold text-emerald-600">
-              Mensual: {formatCurrency(conservativeScenario.extraMonthlyRevenue)}
+            <p className="text-xl font-bold">
+              Mensual: <span className="text-emerald-600">{formatCurrency(conservativeScenario.extraMonthlyRevenue)}</span>
             </p>
-            <p className="text-lg text-emerald-800">
-              Anual: {formatCurrency(conservativeScenario.extraAnnualRevenue)}
+            <p className="text-lg">
+              Anual: <span className="text-emerald-800">{formatCurrency(conservativeScenario.extraAnnualRevenue)}</span>
             </p>
           </CardContent>
         </Card>
@@ -89,11 +89,11 @@ export function RoiResults({
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xl font-bold text-emerald-600">
-              Mensual: {formatCurrency(mediumScenario.extraMonthlyRevenue)}
+            <p className="text-xl font-bold">
+              Mensual: <span className="text-emerald-600">{formatCurrency(mediumScenario.extraMonthlyRevenue)}</span>
             </p>
-            <p className="text-lg text-emerald-800">
-              Anual: {formatCurrency(mediumScenario.extraAnnualRevenue)}
+            <p className="text-lg">
+              Anual: <span className="text-emerald-800">{formatCurrency(mediumScenario.extraAnnualRevenue)}</span>
             </p>
           </CardContent>
         </Card>
@@ -105,11 +105,11 @@ export function RoiResults({
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xl font-bold text-emerald-600">
-              Mensual: {formatCurrency(optimisticScenario.extraMonthlyRevenue)}
+            <p className="text-xl font-bold">
+              Mensual: <span className="text-emerald-600">{formatCurrency(optimisticScenario.extraMonthlyRevenue)}</span>
             </p>
-            <p className="text-lg text-emerald-800">
-              Anual: {formatCurrency(optimisticScenario.extraAnnualRevenue)}
+            <p className="text-lg">
+              Anual: <span className="text-emerald-800">{formatCurrency(optimisticScenario.extraAnnualRevenue)}</span>
             </p>
           </CardContent>
         </Card>
