@@ -73,6 +73,9 @@ export function RoiCalculator() {
   const currentMonthlyRevenue = scheduledCalls * (1 - currentNoShowRate) * currentCloseRate * averageTicket;
   const mediumScenarioMonthlyRevenue = currentMonthlyRevenue + mediumScenario.extraMonthlyRevenue;
 
+  // New calculation: Potential revenue if no-show rate was 0%
+  const potentialRevenueAtZeroNoShow = scheduledCalls * currentCloseRate * averageTicket;
+
   return (
     <Card className="bg-card text-card-foreground shadow-lg border-border">
       <CardHeader>
@@ -184,6 +187,7 @@ export function RoiCalculator() {
           optimisticScenario={optimisticScenario}
           currentMonthlyRevenue={currentMonthlyRevenue}
           mediumScenarioMonthlyRevenue={mediumScenarioMonthlyRevenue}
+          potentialRevenueAtZeroNoShow={potentialRevenueAtZeroNoShow}
         />
       </CardContent>
     </Card>

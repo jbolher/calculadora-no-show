@@ -12,6 +12,7 @@ interface RoiResultsProps {
   optimisticScenario: { extraMonthlyRevenue: number; extraAnnualRevenue: number };
   currentMonthlyRevenue: number;
   mediumScenarioMonthlyRevenue: number;
+  potentialRevenueAtZeroNoShow: number; // New prop
 }
 
 export function RoiResults({
@@ -21,6 +22,7 @@ export function RoiResults({
   optimisticScenario,
   currentMonthlyRevenue,
   mediumScenarioMonthlyRevenue,
+  potentialRevenueAtZeroNoShow, // Destructure new prop
 }: RoiResultsProps) {
   const formatCurrency = (value: number) =>
     new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(value);
@@ -47,8 +49,15 @@ export function RoiResults({
           <CardTitle className="text-xl text-primary">Dinero que se escapa (Mensual)</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-4xl font-bold text-destructive">
+          <p className="text-4xl font-bold text-destructive mb-2">
             {formatCurrency(moneyLostMonthly)}
+          </p>
+          <p className="text-lg text-muted-foreground">
+            Si se te presentase el 100% estarías ganando aproximadamente{" "}
+            <span className="font-semibold text-primary">
+              {formatCurrency(potentialRevenueAtZeroNoShow)}
+            </span>{" "}
+            al mes.
           </p>
         </CardContent>
       </Card>
@@ -57,43 +66,49 @@ export function RoiResults({
 
       <h3 className="text-2xl font-semibold text-primary text-center">Recuperación con IA</h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="bg-muted text-muted-foreground shadow-md border-border">
+        <Card className="bg-card text-card-foreground shadow-md border-border">
           <CardHeader>
-            <CardTitle className="text-lg text-primary">Escenario Conservador (10%)</CardTitle>
+            <CardTitle className="text-lg text-primary">
+              Escenario Conservador (Reducción del 10% en No Show)
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xl font-bold text-foreground">
+            <p className="text-xl font-bold text-emerald-600">
               Mensual: {formatCurrency(conservativeScenario.extraMonthlyRevenue)}
             </p>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-emerald-800">
               Anual: {formatCurrency(conservativeScenario.extraAnnualRevenue)}
             </p>
           </CardContent>
         </Card>
 
-        <Card className="bg-secondary text-secondary-foreground shadow-md border-border">
+        <Card className="bg-card text-card-foreground shadow-md border-border">
           <CardHeader>
-            <CardTitle className="text-lg text-primary">Escenario Medio (15%)</CardTitle>
+            <CardTitle className="text-lg text-primary">
+              Escenario Medio (Reducción del 15% en No Show)
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xl font-bold text-foreground">
+            <p className="text-xl font-bold text-emerald-600">
               Mensual: {formatCurrency(mediumScenario.extraMonthlyRevenue)}
             </p>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-emerald-800">
               Anual: {formatCurrency(mediumScenario.extraAnnualRevenue)}
             </p>
           </CardContent>
         </Card>
 
-        <Card className="bg-accent text-accent-foreground shadow-md border-border">
+        <Card className="bg-card text-card-foreground shadow-md border-border">
           <CardHeader>
-            <CardTitle className="text-lg text-primary">Escenario Optimista (20%)</CardTitle>
+            <CardTitle className="text-lg text-primary">
+              Escenario Optimista (Reducción del 20% en No Show)
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xl font-bold text-foreground">
+            <p className="text-xl font-bold text-emerald-600">
               Mensual: {formatCurrency(optimisticScenario.extraMonthlyRevenue)}
             </p>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-emerald-800">
               Anual: {formatCurrency(optimisticScenario.extraAnnualRevenue)}
             </p>
           </CardContent>
