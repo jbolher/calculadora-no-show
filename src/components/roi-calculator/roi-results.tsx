@@ -1,0 +1,140 @@
+"use client";
+
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { Separator } from "../ui/separator";
+
+interface RoiResultsProps {
+  moneyLostMonthly: number;
+  conservativeScenario: { extraMonthlyRevenue: number; extraAnnualRevenue: number };
+  mediumScenario: { extraMonthlyRevenue: number; extraAnnualRevenue: number };
+  optimisticScenario: { extraMonthlyRevenue: number; extraAnnualRevenue: number };
+  currentMonthlyRevenue: number;
+  mediumScenarioMonthlyRevenue: number;
+}
+
+export function RoiResults({
+  moneyLostMonthly,
+  conservativeScenario,
+  mediumScenario,
+  optimisticScenario,
+  currentMonthlyRevenue,
+  mediumScenarioMonthlyRevenue,
+}: RoiResultsProps) {
+  const formatCurrency = (value: number) =>
+    new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(value);
+
+  const chartData = [
+    {
+      name: "Ingresos Actuales",
+      value: currentMonthlyRevenue,
+      fill: "hsl(var(--muted-foreground))", // Steel grey
+    },
+    {
+      name: "Ingresos con IA (Escenario Medio)",
+      value: mediumScenarioMonthlyRevenue,
+      fill: "hsl(var(--primary))", // Navy blue
+    },
+  ];
+
+  return (
+    <div className="space-y-8">
+      <h2 className="text-3xl font-semibold text-primary text-center">Resultados del ROI</h2>
+
+      <Card className="bg-card text-card-foreground shadow-md border-border">
+        <CardHeader>
+          <CardTitle className="text-xl text-primary">Dinero que se escapa (Mensual)</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-4xl font-bold text-destructive">
+            {formatCurrency(moneyLostMonthly)}
+          </p>
+        </CardContent>
+      </Card>
+
+      <Separator className="bg-border" />
+
+      <h3 className="text-2xl font-semibold text-primary text-center">Recuperación con IA</h3>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Card className="bg-card text-card-foreground shadow-md border-border">
+          <CardHeader>
+            <CardTitle className="text-lg text-primary">Escenario Conservador (10%)</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-xl font-bold text-accent-foreground">
+              Mensual: {formatCurrency(conservativeScenario.extraMonthlyRevenue)}
+            </p>
+            <p className="text-lg text-muted-foreground">
+              Anual: {formatCurrency(conservativeScenario.extraAnnualRevenue)}
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-card text-card-foreground shadow-md border-border">
+          <CardHeader>
+            <CardTitle className="text-lg text-primary">Escenario Medio (15%)</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-xl font-bold text-accent-foreground">
+              Mensual: {formatCurrency(mediumScenario.extraMonthlyRevenue)}
+            </p>
+            <p className="text-lg text-muted-foreground">
+              Anual: {formatCurrency(mediumScenario.extraAnnualRevenue)}
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-card text-card-foreground shadow-md border-border">
+          <CardHeader>
+            <CardTitle className="text-lg text-primary">Escenario Optimista (20%)</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-xl font-bold text-accent-foreground">
+              Mensual: {formatCurrency(optimisticScenario.extraMonthlyRevenue)}
+            </p>
+            <p className="text-lg text-muted-foreground">
+              Anual: {formatCurrency(optimisticScenario.extraAnnualRevenue)}
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Separator className="bg-border" />
+
+      <h3 className="text-2xl font-semibold text-primary text-center">Comparativa de Ingresos Mensuales</h3>
+      <Card className="bg-card text-card-foreground shadow-md border-border p-4">
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+            <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" />
+            <YAxis stroke="hsl(var(--muted-foreground))" tickFormatter={(value) => formatCurrency(value)} />
+            <Tooltip
+              formatter={(value: number) => formatCurrency(value)}
+              contentStyle={{
+                backgroundColor: "hsl(var(--popover))",
+                borderColor: "hsl(var(--border))",
+                color: "hsl(var(--popover-foreground))",
+              }}
+              labelStyle={{ color: "hsl(var(--primary))" }}
+            />
+            <Bar dataKey="value" />
+          </BarChart>
+        </ResponsiveContainer>
+      </Card>
+
+      <Separator className="bg-border" />
+
+      <Card className="bg-card text-card-foreground shadow-lg border-border">
+        <CardHeader>
+          <CardTitle className="text-xl text-primary text-center">Dinero recuperado al año (Escenario Medio)</CardTitle>
+        </CardHeader>
+        <CardContent className="text-center">
+          <p className="text-5xl font-extrabold text-primary">
+            {formatCurrency(mediumScenario.extraAnnualRevenue)}
+          </p>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
