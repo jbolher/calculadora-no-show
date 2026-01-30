@@ -22,10 +22,10 @@ const formSchema = z.object({
   scheduledCalls: z.coerce
     .number()
     .min(0, { message: "El número de llamadas no puede ser negativo." }),
-  currentShowUpRate: z.coerce
+  currentNoShowRate: z.coerce
     .number()
-    .min(0, { message: "La tasa de show-up no puede ser negativa." })
-    .max(100, { message: "La tasa de show-up no puede exceder el 100%." }),
+    .min(0, { message: "La tasa de no-show no puede ser negativa." })
+    .max(100, { message: "La tasa de no-show no puede exceder el 100%." }),
   currentCloseRate: z.coerce
     .number()
     .min(0, { message: "La tasa de cierre no puede ser negativa." })
@@ -40,7 +40,7 @@ export function RoiCalculator() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       scheduledCalls: 100,
-      currentShowUpRate: 50,
+      currentNoShowRate: 50, // Default no-show rate
       currentCloseRate: 20,
       averageTicket: 1000,
     },
@@ -50,27 +50,27 @@ export function RoiCalculator() {
   const values = watch();
 
   const scheduledCalls = values.scheduledCalls || 0;
-  const currentShowUpRate = values.currentShowUpRate / 100 || 0;
+  const currentNoShowRate = values.currentNoShowRate / 100 || 0;
   const currentCloseRate = values.currentCloseRate / 100 || 0;
   const averageTicket = values.averageTicket || 0;
 
   // Calculations
-  const lostCalls = scheduledCalls * (1 - currentShowUpRate);
+  const lostCalls = scheduledCalls * currentNoShowRate;
   const moneyLostMonthly = lostCalls * currentCloseRate * averageTicket;
 
-  const calculateScenario = (recoveryPercentage: number) => {
-    const newShowUpRate = currentShowUpRate + currentShowUpRate * recoveryPercentage;
-    const recoveredCalls = scheduledCalls * (newShowUpRate - currentShowUpRate);
+  const calculateScenario = (reductionPercentage: number) => {
+    const newNoShowRate = currentNoShowRate * (1 - reductionPercentage);
+    const recoveredCalls = scheduledCalls * (currentNoShowRate - newNoShowRate);
     const extraMonthlyRevenue = recoveredCalls * currentCloseRate * averageTicket;
     const extraAnnualRevenue = extraMonthlyRevenue * 12;
     return { extraMonthlyRevenue, extraAnnualRevenue };
   };
 
-  const conservativeScenario = calculateScenario(0.10); // 10% recovery
-  const mediumScenario = calculateScenario(0.15); // 15% recovery
-  const optimisticScenario = calculateScenario(0.20); // 20% recovery
+  const conservativeScenario = calculateScenario(0.10); // 10% reduction in no-show rate
+  const mediumScenario = calculateScenario(0.15); // 15% reduction in no-show rate
+  const optimisticScenario = calculateScenario(0.20); // 20% reduction in no-show rate
 
-  const currentMonthlyRevenue = scheduledCalls * currentShowUpRate * currentCloseRate * averageTicket;
+  const currentMonthlyRevenue = scheduledCalls * (1 - currentNoShowRate) * currentCloseRate * averageTicket;
   const mediumScenarioMonthlyRevenue = currentMonthlyRevenue + mediumScenario.extraMonthlyRevenue;
 
   return (
@@ -102,10 +102,10 @@ export function RoiCalculator() {
 
             <FormField
               control={form.control}
-              name="currentShowUpRate"
+              name="currentNoShowRate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-muted-foreground">Tasa de Show-up actual (%)</FormLabel>
+                  <FormLabel className="text-muted-foreground">Tasa de No Show actual (%)</FormLabel>
                   <FormControl>
                     <Slider
                       min={0}

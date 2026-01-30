@@ -57,12 +57,12 @@ export function RoiResults({
 
       <h3 className="text-2xl font-semibold text-primary text-center">Recuperación con IA</h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="bg-card text-card-foreground shadow-md border-border">
+        <Card className="bg-muted text-muted-foreground shadow-md border-border">
           <CardHeader>
             <CardTitle className="text-lg text-primary">Escenario Conservador (10%)</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xl font-bold text-accent-foreground">
+            <p className="text-xl font-bold text-foreground">
               Mensual: {formatCurrency(conservativeScenario.extraMonthlyRevenue)}
             </p>
             <p className="text-lg text-muted-foreground">
@@ -71,12 +71,12 @@ export function RoiResults({
           </CardContent>
         </Card>
 
-        <Card className="bg-card text-card-foreground shadow-md border-border">
+        <Card className="bg-secondary text-secondary-foreground shadow-md border-border">
           <CardHeader>
             <CardTitle className="text-lg text-primary">Escenario Medio (15%)</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xl font-bold text-accent-foreground">
+            <p className="text-xl font-bold text-foreground">
               Mensual: {formatCurrency(mediumScenario.extraMonthlyRevenue)}
             </p>
             <p className="text-lg text-muted-foreground">
@@ -85,12 +85,12 @@ export function RoiResults({
           </CardContent>
         </Card>
 
-        <Card className="bg-card text-card-foreground shadow-md border-border">
+        <Card className="bg-accent text-accent-foreground shadow-md border-border">
           <CardHeader>
             <CardTitle className="text-lg text-primary">Escenario Optimista (20%)</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xl font-bold text-accent-foreground">
+            <p className="text-xl font-bold text-foreground">
               Mensual: {formatCurrency(optimisticScenario.extraMonthlyRevenue)}
             </p>
             <p className="text-lg text-muted-foreground">
