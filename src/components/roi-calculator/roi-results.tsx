@@ -46,7 +46,7 @@ export function RoiResults({
 
       <Card className="bg-card text-card-foreground shadow-md border-border">
         <CardHeader>
-          <CardTitle className="text-xl text-primary">Dinero que se escapa (Mensual)</CardTitle>
+          <CardTitle className="text-xl text-primary">Potencial cantidad que se te está escapando</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-4xl font-bold text-destructive mb-2">
