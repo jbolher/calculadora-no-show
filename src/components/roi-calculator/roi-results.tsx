@@ -66,7 +66,7 @@ export function RoiResults({
           </CardContent>
         </Card>
 
-        <Card className="md:col-span-2 shadow-lg border-none flex flex-col justify-center relative overflow-hidden text-white" style={{ backgroundColor: '#93AC72' }}>
+        <Card className="md:col-span-2 shadow-lg border-none flex flex-col justify-center relative overflow-hidden text-[#FFFCED]" style={{ backgroundColor: '#93AC72' }}>
           <div className="absolute -right-4 -bottom-4 opacity-20"><Rocket size={120} /></div>
           <CardHeader className="pb-0 text-center">
             <CardTitle className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-90">Dinero recuperado al año</CardTitle>
