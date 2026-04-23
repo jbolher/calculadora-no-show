@@ -40,8 +40,8 @@ export function RoiCalculator() {
   const values = watch();
 
   const scheduledCalls = values.scheduledCalls || 0;
-  const currentNoShowRate = values.currentNoShowRate / 100 || 0;
-  const currentCloseRate = values.currentCloseRate / 100 || 0;
+  const currentNoShowRate = (values.currentNoShowRate || 0) / 100;
+  const currentCloseRate = (values.currentCloseRate || 0) / 100;
   const averageTicket = values.averageTicket || 0;
 
   const lostCalls = scheduledCalls * currentNoShowRate;
@@ -65,28 +65,37 @@ export function RoiCalculator() {
 
   return (
     <TooltipProvider>
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         <div className="lg:col-span-4">
-          <Card className="bg-card shadow-xl border-border sticky top-8">
-            <CardHeader className="py-4">
-              <CardTitle className="text-lg font-bold text-primary">Configuración</CardTitle>
+          <Card className="bg-white/50 backdrop-blur-sm shadow-sm border-none rounded-3xl sticky top-8">
+            <CardHeader className="pb-2 pt-8 px-8">
+              <CardTitle className="text-xl font-bold text-foreground/80">Configuración</CardTitle>
+              <p className="text-xs text-muted-foreground">Ajusta los valores de tu negocio</p>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="p-8 pt-4 space-y-8">
               <Form {...form}>
-                <form className="space-y-3">
+                <form className="space-y-6">
                   <FormField
                     control={form.control}
                     name="scheduledCalls"
                     render={({ field }) => (
-                      <FormItem className="space-y-1">
-                        <div className="flex items-center gap-1">
-                          <FormLabel className="text-[10px] font-bold uppercase text-muted-foreground">Llamadas/mes</FormLabel>
-                          <Tooltip>
-                            <TooltipTrigger asChild><Info size={12} className="text-muted-foreground cursor-help" /></TooltipTrigger>
-                            <TooltipContent><p>Total de llamadas agendadas en tu calendario mensualmente.</p></TooltipContent>
-                          </Tooltip>
+                      <FormItem className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <FormLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Llamadas/mes</FormLabel>
+                            <Tooltip>
+                              <TooltipTrigger asChild><Info size={14} className="text-muted-foreground/50 cursor-help" /></TooltipTrigger>
+                              <TooltipContent><p>Total de llamadas agendadas mensualmente.</p></TooltipContent>
+                            </Tooltip>
+                          </div>
                         </div>
-                        <FormControl><Input type="number" {...field} className="h-8 text-sm focus-visible:ring-[#93AC72]" /></FormControl>
+                        <FormControl>
+                          <Input
+                            type="number"
+                            {...field}
+                            className="h-12 bg-background/50 border-none shadow-inner rounded-xl text-base font-medium focus-visible:ring-[#93AC72]/20"
+                          />
+                        </FormControl>
                       </FormItem>
                     )}
                   />
@@ -95,23 +104,25 @@ export function RoiCalculator() {
                     control={form.control}
                     name="currentNoShowRate"
                     render={({ field }) => (
-                      <FormItem className="space-y-1">
-                        <div className="flex items-center gap-1">
-                          <FormLabel className="text-[10px] font-bold uppercase text-muted-foreground">No Show (%)</FormLabel>
-                          <Tooltip>
-                            <TooltipTrigger asChild><Info size={12} className="text-muted-foreground cursor-help" /></TooltipTrigger>
-                            <TooltipContent><p>Porcentaje de personas que no aparecen en la llamada.</p></TooltipContent>
-                          </Tooltip>
+                      <FormItem className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <FormLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">No Show (%)</FormLabel>
+                            <Tooltip>
+                              <TooltipTrigger asChild><Info size={14} className="text-muted-foreground/50 cursor-help" /></TooltipTrigger>
+                              <TooltipContent><p>Porcentaje de personas que no aparecen.</p></TooltipContent>
+                            </Tooltip>
+                          </div>
+                          <span className="text-sm font-bold text-[#93AC72]">{field.value}%</span>
                         </div>
-                        <Slider 
-                          min={0} 
-                          max={100} 
-                          step={1} 
-                          value={[field.value]} 
-                          onValueChange={(val) => field.onChange(val[0])} 
-                          className="py-2"
+                        <Slider
+                          min={0}
+                          max={100}
+                          step={1}
+                          value={[field.value]}
+                          onValueChange={(val) => field.onChange(val[0])}
+                          className="py-4"
                         />
-                        <Input type="number" {...field} className="h-8 text-sm focus-visible:ring-[#93AC72]" />
                       </FormItem>
                     )}
                   />
@@ -120,23 +131,25 @@ export function RoiCalculator() {
                     control={form.control}
                     name="currentCloseRate"
                     render={({ field }) => (
-                      <FormItem className="space-y-1">
-                        <div className="flex items-center gap-1">
-                          <FormLabel className="text-[10px] font-bold uppercase text-muted-foreground">Cierre (%)</FormLabel>
-                          <Tooltip>
-                            <TooltipTrigger asChild><Info size={12} className="text-muted-foreground cursor-help" /></TooltipTrigger>
-                            <TooltipContent><p>Porcentaje de llamadas realizadas que terminan en venta.</p></TooltipContent>
-                          </Tooltip>
+                      <FormItem className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <FormLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Cierre (%)</FormLabel>
+                            <Tooltip>
+                              <TooltipTrigger asChild><Info size={14} className="text-muted-foreground/50 cursor-help" /></TooltipTrigger>
+                              <TooltipContent><p>Porcentaje de llamadas que terminan en venta.</p></TooltipContent>
+                            </Tooltip>
+                          </div>
+                          <span className="text-sm font-bold text-[#93AC72]">{field.value}%</span>
                         </div>
-                        <Slider 
-                          min={0} 
-                          max={100} 
-                          step={1} 
-                          value={[field.value]} 
-                          onValueChange={(val) => field.onChange(val[0])} 
-                          className="py-2"
+                        <Slider
+                          min={0}
+                          max={100}
+                          step={1}
+                          value={[field.value]}
+                          onValueChange={(val) => field.onChange(val[0])}
+                          className="py-4"
                         />
-                        <Input type="number" {...field} className="h-8 text-sm focus-visible:ring-[#93AC72]" />
                       </FormItem>
                     )}
                   />
@@ -145,15 +158,23 @@ export function RoiCalculator() {
                     control={form.control}
                     name="averageTicket"
                     render={({ field }) => (
-                      <FormItem className="space-y-1">
-                        <div className="flex items-center gap-1">
-                          <FormLabel className="text-[10px] font-bold uppercase text-muted-foreground">Ticket Medio (€)</FormLabel>
-                          <Tooltip>
-                            <TooltipTrigger asChild><Info size={12} className="text-muted-foreground cursor-help" /></TooltipTrigger>
-                            <TooltipContent><p>Valor promedio de cada venta realizada.</p></TooltipContent>
-                          </Tooltip>
+                      <FormItem className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <FormLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Ticket Medio (€)</FormLabel>
+                            <Tooltip>
+                              <TooltipTrigger asChild><Info size={14} className="text-muted-foreground/50 cursor-help" /></TooltipTrigger>
+                              <TooltipContent><p>Valor promedio de cada venta.</p></TooltipContent>
+                            </Tooltip>
+                          </div>
                         </div>
-                        <FormControl><Input type="number" {...field} className="h-8 text-sm focus-visible:ring-[#93AC72]" /></FormControl>
+                        <FormControl>
+                          <Input
+                            type="number"
+                            {...field}
+                            className="h-12 bg-background/50 border-none shadow-inner rounded-xl text-base font-medium focus-visible:ring-[#93AC72]/20"
+                          />
+                        </FormControl>
                       </FormItem>
                     )}
                   />

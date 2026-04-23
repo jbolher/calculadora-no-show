@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import { Button } from "@/components/ui/button";
-import { TrendingUp, AlertCircle, ArrowRight, ShieldCheck, Rocket } from "lucide-react";
+import { TrendingUp, AlertCircle, ArrowRight, ShieldCheck, Rocket, Wallet } from "lucide-react";
+import { AnimatedNumber } from "./animated-number";
 
 interface RoiResultsProps {
   moneyLostMonthly: number;
@@ -26,7 +27,7 @@ export function RoiResults({
   potentialRevenueAtZeroNoShow,
 }: RoiResultsProps) {
   const formatCurrency = (value: number) =>
-    new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(value);
+    new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(value);
 
   const chartData = [
     { name: "Actual", value: currentMonthlyRevenue, color: "#93AC72" },
@@ -36,126 +37,140 @@ export function RoiResults({
   const demoUrl = "https://vsl.bolherconsulting.com/vsl-1?utm_medium=leadmagnet&utm_content=calculadora-noshow";
 
   return (
-    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      {/* BLOQUE 1: Comparativa e Ingresos Anuales */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-        <Card className="md:col-span-3 bg-card shadow-md border-border">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-bold flex items-center gap-2 uppercase tracking-wider text-muted-foreground">
-              <TrendingUp size={16} style={{ color: '#93AC72' }} />
-              Comparativa de Ingresos Mensuales
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="h-[200px]">
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+      {/* Top Row: Main Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Annual Recovery Widget */}
+        <Card className="border-none shadow-sm bg-white/50 backdrop-blur-sm rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
+          <CardContent className="p-8 flex flex-col justify-between h-full">
+            <div className="flex items-center justify-between mb-4">
+              <div className="p-3 rounded-2xl bg-[#93AC72]/10 text-[#93AC72]">
+                <Rocket size={24} />
+              </div>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Recuperación Anual</span>
+            </div>
+            <div>
+              <h3 className="text-4xl font-black text-foreground tracking-tight">
+                <AnimatedNumber value={mediumScenario.extraAnnualRevenue} formatter={formatCurrency} />
+              </h3>
+              <p className="text-sm text-muted-foreground mt-2">Ingresos extra proyectados al año con IA</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Monthly Loss Widget */}
+        <Card className="border-none shadow-sm bg-[#de6560]/5 backdrop-blur-sm rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
+          <CardContent className="p-8 flex flex-col justify-between h-full">
+            <div className="flex items-center justify-between mb-4">
+              <div className="p-3 rounded-2xl bg-[#de6560]/10 text-[#de6560]">
+                <AlertCircle size={24} />
+              </div>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#de6560]/70">Pérdida Mensual</span>
+            </div>
+            <div>
+              <h3 className="text-4xl font-black text-[#de6560] tracking-tight">
+                <AnimatedNumber value={moneyLostMonthly} formatter={formatCurrency} />
+              </h3>
+              <p className="text-sm text-[#de6560]/60 mt-2">Dinero que se escapa por No-Shows cada mes</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Chart Widget */}
+      <Card className="border-none shadow-sm bg-white/50 backdrop-blur-sm rounded-3xl overflow-hidden">
+        <CardContent className="p-8">
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+              <TrendingUp size={18} className="text-[#93AC72]" />
+              Impacto en Facturación Mensual
+            </h3>
+          </div>
+          <div className="h-[250px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
-                <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" fontSize={12} />
-                <YAxis stroke="hsl(var(--muted-foreground))" fontSize={10} tickFormatter={(v) => `${v / 1000}k`} />
-                <Tooltip 
-                  formatter={(v: number) => formatCurrency(v)} 
-                  contentStyle={{ backgroundColor: "#FFFCED", borderRadius: "8px", border: "1px solid hsl(var(--border))" }} 
+              <BarChart data={chartData} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="8 8" stroke="hsl(var(--muted-foreground)/0.1)" vertical={false} />
+                <XAxis 
+                  dataKey="name" 
+                  axisLine={false} 
+                  tickLine={false} 
+                  tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12, fontWeight: 500 }}
+                  dy={10}
                 />
-                <Bar dataKey="value" radius={[4, 4, 0, 0]} barSize={50}>
+                <YAxis 
+                  axisLine={false} 
+                  tickLine={false} 
+                  tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10 }}
+                  tickFormatter={(v) => `${v / 1000}k`} 
+                />
+                <Tooltip 
+                  cursor={{ fill: 'hsl(var(--primary)/0.05)' }}
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length) {
+                      return (
+                        <div className="bg-white p-4 shadow-xl rounded-2xl border-none">
+                          <p className="text-xs font-bold text-muted-foreground uppercase mb-1">{payload[0].payload.name}</p>
+                          <p className="text-lg font-black text-foreground">{formatCurrency(payload[0].value as number)}</p>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+                <Bar dataKey="value" radius={[12, 12, 12, 12]} barSize={60}>
                   {chartData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
+                    <Cell key={`cell-${index}`} fill={entry.color} fillOpacity={0.8} />
                   ))}
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
-          </CardContent>
-        </Card>
+          </div>
+        </CardContent>
+      </Card>
 
-        <Card className="md:col-span-2 shadow-lg border-none flex flex-col justify-center relative overflow-hidden text-[#FFFCED]" style={{ backgroundColor: '#93AC72' }}>
-          <div className="absolute -right-4 -bottom-4 opacity-20"><Rocket size={120} /></div>
-          <CardHeader className="pb-0 text-center">
-            <CardTitle className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-90">Dinero recuperado al año</CardTitle>
-          </CardHeader>
-          <CardContent className="text-center pt-4">
-            <p className="text-3xl font-black">{formatCurrency(mediumScenario.extraAnnualRevenue)}</p>
-            <p className="text-[9px] opacity-80 mt-2 font-medium">Basado en escenario medio (40%)</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* BLOQUE 2: Recuperación con IA */}
-      <div className="space-y-3">
-        <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-          Escenarios de recuperación con IA
+      {/* Scenarios Grid */}
+      <div className="space-y-4">
+        <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60 px-2">
+          Escenarios de Recuperación
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <Card className="bg-card" style={{ borderColor: '#93AC7233' }}>
-            <CardContent className="pt-4">
-              <div className="flex items-center gap-2 mb-2">
-                <ShieldCheck style={{ color: '#93AC72' }} size={14} />
-                <span className="text-[10px] font-bold uppercase">Conservador (20%)</span>
-              </div>
-              <p className="text-xl font-bold" style={{ color: '#93AC72' }}>{formatCurrency(conservativeScenario.extraMonthlyRevenue)}</p>
-              <p className="text-[9px] text-muted-foreground mt-1">Garantizado por contrato.</p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card" style={{ borderColor: '#6a994e33' }}>
-            <CardContent className="pt-4">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-3.5 h-3.5 rounded-full" style={{ backgroundColor: '#6a994e' }} />
-                <span className="text-[10px] font-bold uppercase">Probable (40%)</span>
-              </div>
-              <p className="text-xl font-bold" style={{ color: '#6a994e' }}>{formatCurrency(mediumScenario.extraMonthlyRevenue)}</p>
-              <p className="text-[9px] text-muted-foreground mt-1">Resultado medio esperado.</p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card" style={{ borderColor: '#38664133' }}>
-            <CardContent className="pt-4">
-              <div className="flex items-center gap-2 mb-2">
-                <Rocket style={{ color: '#386641' }} size={14} />
-                <span className="text-[10px] font-bold uppercase">Optimista (80%)</span>
-              </div>
-              <p className="text-xl font-bold" style={{ color: '#386641' }}>{formatCurrency(optimisticScenario.extraMonthlyRevenue)}</p>
-              <p className="text-[9px] text-muted-foreground mt-1">Máximo potencial técnico.</p>
-            </CardContent>
-          </Card>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[
+            { label: "Conservador", value: conservativeScenario.extraMonthlyRevenue, icon: ShieldCheck, color: "text-[#93AC72]", bg: "bg-[#93AC72]/5", desc: "Mínimo garantizado" },
+            { label: "Probable", value: mediumScenario.extraMonthlyRevenue, icon: Wallet, color: "text-[#93AC72]", bg: "bg-[#93AC72]/10", desc: "Resultado esperado" },
+            { label: "Optimista", value: optimisticScenario.extraMonthlyRevenue, icon: Rocket, color: "text-[#93AC72]", bg: "bg-[#93AC72]/20", desc: "Máximo potencial" },
+          ].map((s, i) => (
+            <Card key={i} className="border-none shadow-sm bg-white/50 backdrop-blur-sm rounded-2xl hover:translate-y-[-4px] transition-all duration-300">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className={`p-2 rounded-xl ${s.bg} ${s.color}`}>
+                    <s.icon size={16} />
+                  </div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{s.label}</span>
+                </div>
+                <p className="text-2xl font-black text-foreground">
+                  <AnimatedNumber value={s.value} formatter={formatCurrency} />
+                </p>
+                <p className="text-[10px] text-muted-foreground mt-1">{s.desc}</p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
 
-      {/* BLOQUE 3: Resultados (Potencial Perdido) */}
-      <Card className="overflow-hidden" style={{ backgroundColor: '#de65600d', borderColor: '#de656033' }}>
-        <CardContent className="pt-6">
-          <div className="flex items-center gap-2 mb-2">
-            <AlertCircle style={{ color: '#de6560' }} size={18} />
-            <h3 className="text-sm font-bold uppercase tracking-wider" style={{ color: '#de6560' }}>Resultados: Potencial perdido</h3>
-          </div>
-          <div className="flex flex-col md:flex-row md:items-end gap-2 md:gap-4">
-            <p className="text-4xl font-black" style={{ color: '#de6560' }}>{formatCurrency(moneyLostMonthly)}</p>
-            <div className="space-y-1">
-              <p className="text-xs text-muted-foreground">es lo que dejas de ingresar cada mes por los No-Shows.</p>
-              <p className="text-[10px] text-muted-foreground italic">
-                Potencial total si el No-Show fuera 0%: <span className="font-bold text-primary">{formatCurrency(potentialRevenueAtZeroNoShow)}/mes</span>
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* CTA Final */}
-      <Card className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground border-none shadow-xl">
-        <CardContent className="p-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="text-center md:text-left">
-            <h4 className="text-lg font-bold">¿Quieres recuperar estos ingresos?</h4>
-            <p className="text-xs opacity-90">Agenda una demo y te mostramos cómo eliminar los No-Shows.</p>
-          </div>
-          <Button 
-            size="lg" 
-            variant="secondary" 
-            className="font-bold group w-full md:w-auto"
-            onClick={() => window.open(demoUrl, "_blank")}
-          >
-            Agendar Demo Gratis
-            <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
-          </Button>
-        </CardContent>
-      </Card>
+      {/* CTA Section */}
+      <div className="pt-4">
+        <Button
+          size="lg"
+          className="w-full h-16 rounded-2xl bg-[#93AC72] hover:bg-[#93AC72]/90 text-white font-bold text-lg shadow-lg shadow-[#93AC72]/20 group transition-all duration-300"
+          onClick={() => window.open(demoUrl, "_blank")}
+        >
+          <span>Agendar Demo y Recuperar Ingresos</span>
+          <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform duration-300" size={20} />
+        </Button>
+        <p className="text-center text-[10px] text-muted-foreground mt-4 uppercase tracking-widest">
+          Potencial total al 0% No-Show: <span className="font-bold text-foreground">{formatCurrency(potentialRevenueAtZeroNoShow)}/mes</span>
+        </p>
+      </div>
     </div>
   );
 }

@@ -4,9 +4,27 @@ import { RoiCalculator } from "@/components/roi-calculator/roi-calculator";
 
 export default function RoiCalculatorPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground p-4 sm:p-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-background text-foreground selection:bg-primary/10">
+      <div className="max-w-6xl mx-auto px-6 py-12 md:py-20">
+        <header className="mb-16 text-center space-y-4">
+          <div className="inline-block px-4 py-1.5 rounded-full bg-primary/5 text-primary text-[10px] font-bold uppercase tracking-[0.2em]">
+            Calculadora de Impacto IA
+          </div>
+          <h1 className="text-4xl md:text-6xl font-black tracking-tight text-foreground">
+            Calcula tu ROI <span className="text-primary/40">Potencial</span>
+          </h1>
+          <p className="text-muted-foreground max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+            Descubre cuánto dinero estás perdiendo por los No-Shows y cómo nuestra IA puede ayudarte a recuperarlo de forma automática.
+          </p>
+        </header>
+        
         <RoiCalculator />
+        
+        <footer className="mt-24 pt-8 border-t border-foreground/5 text-center">
+          <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
+            © {new Date().getFullYear()} Bolher Consulting · Todos los derechos reservados
+          </p>
+        </footer>
       </div>
     </div>
   );
