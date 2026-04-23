@@ -161,7 +161,7 @@ export function RoiResults({
       <div className="pt-4">
         <Button
           size="lg"
-          className="w-full h-16 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-white font-bold text-lg shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300"
+          className="w-full h-16 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-lg shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300"
           onClick={() => window.open(demoUrl, "_blank")}
         >
           <span>Agendar Demo y Recuperar Ingresos</span>
