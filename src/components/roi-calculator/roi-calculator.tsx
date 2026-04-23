@@ -10,7 +10,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -87,7 +86,7 @@ export function RoiCalculator() {
                             <TooltipContent><p>Total de llamadas agendadas en tu calendario mensualmente.</p></TooltipContent>
                           </Tooltip>
                         </div>
-                        <FormControl><Input type="number" {...field} className="h-8 text-sm" /></FormControl>
+                        <FormControl><Input type="number" {...field} className="h-8 text-sm focus-visible:ring-[#93AC72]" /></FormControl>
                       </FormItem>
                     )}
                   />
@@ -104,8 +103,15 @@ export function RoiCalculator() {
                             <TooltipContent><p>Porcentaje de personas que no aparecen en la llamada.</p></TooltipContent>
                           </Tooltip>
                         </div>
-                        <Slider min={0} max={100} step={1} value={[field.value]} onValueChange={(val) => field.onChange(val[0])} className="py-2" />
-                        <Input type="number" {...field} className="h-8 text-sm" />
+                        <Slider 
+                          min={0} 
+                          max={100} 
+                          step={1} 
+                          value={[field.value]} 
+                          onValueChange={(val) => field.onChange(val[0])} 
+                          className="py-2"
+                        />
+                        <Input type="number" {...field} className="h-8 text-sm focus-visible:ring-[#93AC72]" />
                       </FormItem>
                     )}
                   />
@@ -122,8 +128,15 @@ export function RoiCalculator() {
                             <TooltipContent><p>Porcentaje de llamadas realizadas que terminan en venta.</p></TooltipContent>
                           </Tooltip>
                         </div>
-                        <Slider min={0} max={100} step={1} value={[field.value]} onValueChange={(val) => field.onChange(val[0])} className="py-2" />
-                        <Input type="number" {...field} className="h-8 text-sm" />
+                        <Slider 
+                          min={0} 
+                          max={100} 
+                          step={1} 
+                          value={[field.value]} 
+                          onValueChange={(val) => field.onChange(val[0])} 
+                          className="py-2"
+                        />
+                        <Input type="number" {...field} className="h-8 text-sm focus-visible:ring-[#93AC72]" />
                       </FormItem>
                     )}
                   />
@@ -140,7 +153,7 @@ export function RoiCalculator() {
                             <TooltipContent><p>Valor promedio de cada venta realizada.</p></TooltipContent>
                           </Tooltip>
                         </div>
-                        <FormControl><Input type="number" {...field} className="h-8 text-sm" /></FormControl>
+                        <FormControl><Input type="number" {...field} className="h-8 text-sm focus-visible:ring-[#93AC72]" /></FormControl>
                       </FormItem>
                     )}
                   />

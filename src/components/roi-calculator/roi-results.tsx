@@ -42,7 +42,7 @@ export function RoiResults({
         <Card className="md:col-span-3 bg-card shadow-md border-border">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-bold flex items-center gap-2 uppercase tracking-wider text-muted-foreground">
-              <TrendingUp size={16} className="text-primary" />
+              <TrendingUp size={16} style={{ color: '#93AC72' }} />
               Comparativa de Ingresos Mensuales
             </CardTitle>
           </CardHeader>
@@ -63,14 +63,14 @@ export function RoiResults({
           </CardContent>
         </Card>
 
-        <Card className="md:col-span-2 bg-primary text-primary-foreground shadow-lg border-none flex flex-col justify-center relative overflow-hidden">
-          <div className="absolute -right-4 -bottom-4 opacity-10"><Rocket size={120} /></div>
+        <Card className="md:col-span-2 shadow-lg border-none flex flex-col justify-center relative overflow-hidden text-white" style={{ backgroundColor: '#93AC72' }}>
+          <div className="absolute -right-4 -bottom-4 opacity-20"><Rocket size={120} /></div>
           <CardHeader className="pb-0 text-center">
-            <CardTitle className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-80">Dinero recuperado al año</CardTitle>
+            <CardTitle className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-90">Dinero recuperado al año</CardTitle>
           </CardHeader>
           <CardContent className="text-center pt-4">
             <p className="text-3xl font-black">{formatCurrency(mediumScenario.extraAnnualRevenue)}</p>
-            <p className="text-[9px] opacity-70 mt-2 font-medium">Basado en escenario medio (40%)</p>
+            <p className="text-[9px] opacity-80 mt-2 font-medium">Basado en escenario medio (40%)</p>
           </CardContent>
         </Card>
       </div>
