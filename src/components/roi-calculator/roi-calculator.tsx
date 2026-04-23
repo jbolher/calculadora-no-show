@@ -93,7 +93,7 @@ export function RoiCalculator() {
                           <Input
                             type="number"
                             {...field}
-                            className="h-12 bg-background border-none shadow-inner rounded-xl text-base font-medium focus-visible:ring-[#2D6A4F]/20"
+                            className="h-12 bg-background border-none shadow-inner rounded-xl text-base font-medium focus-visible:ring-[#345D36]/20"
                           />
                         </FormControl>
                       </FormItem>
@@ -113,7 +113,7 @@ export function RoiCalculator() {
                               <TooltipContent><p>Porcentaje de personas que no aparecen.</p></TooltipContent>
                             </Tooltip>
                           </div>
-                          <span className="text-sm font-bold text-[#2D6A4F]">{field.value}%</span>
+                          <span className="text-sm font-bold text-[#345D36]">{field.value}%</span>
                         </div>
                         <Slider
                           min={0}
@@ -122,8 +122,8 @@ export function RoiCalculator() {
                           value={[field.value]}
                           onValueChange={(val) => field.onChange(val[0])}
                           className="py-4"
-                          rangeClassName="bg-[#2D6A4F]"
-                          thumbClassName="border-[#2D6A4F]/50"
+                          rangeClassName="bg-[#345D36]"
+                          thumbClassName="border-[#345D36]/50"
                         />
                       </FormItem>
                     )}
@@ -142,7 +142,7 @@ export function RoiCalculator() {
                               <TooltipContent><p>Porcentaje de llamadas que terminan en venta.</p></TooltipContent>
                             </Tooltip>
                           </div>
-                          <span className="text-sm font-bold text-[#2D6A4F]">{field.value}%</span>
+                          <span className="text-sm font-bold text-[#345D36]">{field.value}%</span>
                         </div>
                         <Slider
                           min={0}
@@ -151,8 +151,8 @@ export function RoiCalculator() {
                           value={[field.value]}
                           onValueChange={(val) => field.onChange(val[0])}
                           className="py-4"
-                          rangeClassName="bg-[#2D6A4F]"
-                          thumbClassName="border-[#2D6A4F]/50"
+                          rangeClassName="bg-[#345D36]"
+                          thumbClassName="border-[#345D36]/50"
                         />
                       </FormItem>
                     )}
@@ -176,7 +176,7 @@ export function RoiCalculator() {
                           <Input
                             type="number"
                             {...field}
-                            className="h-12 bg-background border-none shadow-inner rounded-xl text-base font-medium focus-visible:ring-[#2D6A4F]/20"
+                            className="h-12 bg-background border-none shadow-inner rounded-xl text-base font-medium focus-visible:ring-[#345D36]/20"
                           />
                         </FormControl>
                       </FormItem>

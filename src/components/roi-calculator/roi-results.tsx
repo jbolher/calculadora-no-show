@@ -43,7 +43,7 @@ export function RoiResults({
 
   const chartData = [
     { name: "Actual", value: currentMonthlyRevenue, color: "#B53032" },
-    { name: "Con IA", value: mediumScenarioMonthlyRevenue, color: "#2D6A4F" },
+    { name: "Con IA", value: mediumScenarioMonthlyRevenue, color: "#345D36" },
   ];
 
   const demoUrl = "https://vsl.bolherconsulting.com/vsl-1?utm_medium=leadmagnet&utm_content=calculadora-noshow";
@@ -56,7 +56,7 @@ export function RoiResults({
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-2xl bg-[#2D6A4F]/10 text-[#2D6A4F]">
+              <div className="p-3 rounded-2xl bg-[#345D36]/10 text-[#345D36]">
                 <Rocket size={24} />
               </div>
               <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Recuperación Anual</span>
@@ -94,7 +94,7 @@ export function RoiResults({
         <CardContent className="p-8">
           <div className="flex items-center justify-between mb-8">
             <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-              <TrendingUp size={18} className="text-[#2D6A4F]" />
+              <TrendingUp size={18} className="text-[#345D36]" />
               Impacto en Facturación Mensual
             </h3>
           </div>
@@ -148,7 +148,7 @@ export function RoiResults({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
             { label: "Conservador", value: conservativeScenario.extraMonthlyRevenue, icon: ShieldCheck, color: "text-[#B53032]", bg: "bg-[#B53032]/5", desc: "Mínimo garantizado" },
-            { label: "Probable", value: mediumScenario.extraMonthlyRevenue, icon: Wallet, color: "text-[#2D6A4F]", bg: "bg-[#2D6A4F]/10", desc: "Resultado esperado" },
+            { label: "Probable", value: mediumScenario.extraMonthlyRevenue, icon: Wallet, color: "text-[#345D36]", bg: "bg-[#345D36]/10", desc: "Resultado esperado" },
             { label: "Optimista", value: optimisticScenario.extraMonthlyRevenue, icon: Rocket, color: "text-[#5F8649]", bg: "bg-[#5F8649]/10", desc: "Máximo potencial" },
           ].map((s, i) => (
             <Card key={i} className="border-none shadow-2xl bg-background rounded-2xl hover:translate-y-[-4px] transition-all duration-300">
