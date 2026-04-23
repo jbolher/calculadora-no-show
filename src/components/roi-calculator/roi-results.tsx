@@ -52,7 +52,10 @@ export function RoiResults({
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
                 <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" fontSize={12} />
                 <YAxis stroke="hsl(var(--muted-foreground))" fontSize={10} tickFormatter={(v) => `${v / 1000}k`} />
-                <Tooltip formatter={(v: number) => formatCurrency(v)} contentStyle={{ borderRadius: "8px" }} />
+                <Tooltip 
+                  formatter={(v: number) => formatCurrency(v)} 
+                  contentStyle={{ backgroundColor: "#FFFCED", borderRadius: "8px", border: "1px solid hsl(var(--border))" }} 
+                />
                 <Bar dataKey="value" radius={[4, 4, 0, 0]} barSize={50}>
                   {chartData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
