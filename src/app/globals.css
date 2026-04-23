@@ -30,9 +30,9 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 60 67% 97%;
 
-    /* #B08968 en HSL: 27 33% 55% */
-    --border: 27 33% 55%;
-    --input: 27 33% 55%;
+    /* #B53032 en HSL: 359 58% 45% */
+    --border: 359 58% 45%;
+    --input: 359 58% 45%;
     --ring: 0 4% 18%;
 
     --chart-1: 12 76% 61%;
@@ -48,7 +48,7 @@
     --sidebar-primary-foreground: 60 67% 97%;
     --sidebar-accent: 60 30% 90%;
     --sidebar-accent-foreground: 0 4% 18%;
-    --sidebar-border: 27 33% 55%;
+    --sidebar-border: 359 58% 45%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
   .dark {

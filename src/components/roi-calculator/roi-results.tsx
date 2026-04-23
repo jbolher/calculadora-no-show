@@ -30,7 +30,7 @@ export function RoiResults({
     new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(value);
 
   const chartData = [
-    { name: "Actual", value: currentMonthlyRevenue, color: "#B08968" }, // Tan
+    { name: "Actual", value: currentMonthlyRevenue, color: "#B53032" }, // Red
     { name: "Con IA", value: mediumScenarioMonthlyRevenue, color: "#2D6A4F" }, // Green
   ];
 
@@ -62,16 +62,16 @@ export function RoiResults({
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-2xl bg-[#7F5539]/10 text-[#7F5539]">
+              <div className="p-3 rounded-2xl bg-[#B53032]/10 text-[#B53032]">
                 <AlertCircle size={24} />
               </div>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#7F5539]/70">Pérdida Mensual</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#B53032]/70">Pérdida Mensual</span>
             </div>
             <div>
-              <h3 className="text-4xl font-black text-[#7F5539] tracking-tight">
+              <h3 className="text-4xl font-black text-[#B53032] tracking-tight">
                 <AnimatedNumber value={moneyLostMonthly} formatter={formatCurrency} />
               </h3>
-              <p className="text-sm text-[#7F5539]/60 mt-2">Dinero que se escapa por No-Shows cada mes</p>
+              <p className="text-sm text-[#B53032]/60 mt-2">Dinero que se escapa por No-Shows cada mes</p>
             </div>
           </CardContent>
         </Card>
@@ -135,7 +135,7 @@ export function RoiResults({
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
-            { label: "Conservador", value: conservativeScenario.extraMonthlyRevenue, icon: ShieldCheck, color: "text-[#B08968]", bg: "bg-[#B08968]/5", desc: "Mínimo garantizado" },
+            { label: "Conservador", value: conservativeScenario.extraMonthlyRevenue, icon: ShieldCheck, color: "text-[#B53032]", bg: "bg-[#B53032]/5", desc: "Mínimo garantizado" },
             { label: "Probable", value: mediumScenario.extraMonthlyRevenue, icon: Wallet, color: "text-[#2D6A4F]", bg: "bg-[#2D6A4F]/10", desc: "Resultado esperado" },
             { label: "Optimista", value: optimisticScenario.extraMonthlyRevenue, icon: Rocket, color: "text-[#A8DADC]", bg: "bg-[#A8DADC]/20", desc: "Máximo potencial" },
           ].map((s, i) => (
