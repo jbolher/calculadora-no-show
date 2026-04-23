@@ -3,9 +3,8 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { TrendingUp, AlertCircle, ArrowRight, ShieldCheck, Zap, Rocket } from "lucide-react";
+import { TrendingUp, AlertCircle, ArrowRight, ShieldCheck, Rocket } from "lucide-react";
 
 interface RoiResultsProps {
   moneyLostMonthly: number;
@@ -30,9 +29,11 @@ export function RoiResults({
     new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(value);
 
   const chartData = [
-    { name: "Actual", value: currentMonthlyRevenue, color: "#10b981" },
-    { name: "Con IA", value: mediumScenarioMonthlyRevenue, color: "#ef4444" },
+    { name: "Actual", value: currentMonthlyRevenue, color: "#a7c957" },
+    { name: "Con IA", value: mediumScenarioMonthlyRevenue, color: "#de6560" },
   ];
+
+  const demoUrl = "https://vsl.bolherconsulting.com/vsl-1?utm_medium=leadmagnet&utm_content=calculadora-noshow";
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -77,39 +78,38 @@ export function RoiResults({
       {/* BLOQUE 2: Recuperación con IA */}
       <div className="space-y-3">
         <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-          <Zap size={14} className="text-yellow-500" />
           Escenarios de recuperación con IA
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <Card className="bg-card border-emerald-500/20">
+          <Card className="bg-card" style={{ borderColor: '#a7c95733' }}>
             <CardContent className="pt-4">
               <div className="flex items-center gap-2 mb-2">
-                <ShieldCheck className="text-emerald-500" size={14} />
+                <ShieldCheck style={{ color: '#a7c957' }} size={14} />
                 <span className="text-[10px] font-bold uppercase">Conservador (20%)</span>
               </div>
-              <p className="text-xl font-bold text-emerald-600">{formatCurrency(conservativeScenario.extraMonthlyRevenue)}</p>
+              <p className="text-xl font-bold" style={{ color: '#a7c957' }}>{formatCurrency(conservativeScenario.extraMonthlyRevenue)}</p>
               <p className="text-[9px] text-muted-foreground mt-1">Garantizado por contrato.</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-card border-blue-500/20">
+          <Card className="bg-card" style={{ borderColor: '#6a994e33' }}>
             <CardContent className="pt-4">
               <div className="flex items-center gap-2 mb-2">
-                <Zap className="text-blue-500" size={14} />
+                <div className="w-3.5 h-3.5 rounded-full" style={{ backgroundColor: '#6a994e' }} />
                 <span className="text-[10px] font-bold uppercase">Probable (40%)</span>
               </div>
-              <p className="text-xl font-bold text-blue-600">{formatCurrency(mediumScenario.extraMonthlyRevenue)}</p>
+              <p className="text-xl font-bold" style={{ color: '#6a994e' }}>{formatCurrency(mediumScenario.extraMonthlyRevenue)}</p>
               <p className="text-[9px] text-muted-foreground mt-1">Resultado medio esperado.</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-card border-purple-500/20">
+          <Card className="bg-card" style={{ borderColor: '#38664133' }}>
             <CardContent className="pt-4">
               <div className="flex items-center gap-2 mb-2">
-                <Rocket className="text-purple-500" size={14} />
+                <Rocket style={{ color: '#386641' }} size={14} />
                 <span className="text-[10px] font-bold uppercase">Optimista (80%)</span>
               </div>
-              <p className="text-xl font-bold text-purple-600">{formatCurrency(optimisticScenario.extraMonthlyRevenue)}</p>
+              <p className="text-xl font-bold" style={{ color: '#386641' }}>{formatCurrency(optimisticScenario.extraMonthlyRevenue)}</p>
               <p className="text-[9px] text-muted-foreground mt-1">Máximo potencial técnico.</p>
             </CardContent>
           </Card>
@@ -142,7 +142,12 @@ export function RoiResults({
             <h4 className="text-lg font-bold">¿Quieres recuperar estos ingresos?</h4>
             <p className="text-xs opacity-90">Agenda una demo y te mostramos cómo eliminar los No-Shows.</p>
           </div>
-          <Button size="lg" variant="secondary" className="font-bold group w-full md:w-auto">
+          <Button 
+            size="lg" 
+            variant="secondary" 
+            className="font-bold group w-full md:w-auto"
+            onClick={() => window.open(demoUrl, "_blank")}
+          >
             Agendar Demo Gratis
             <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
           </Button>
