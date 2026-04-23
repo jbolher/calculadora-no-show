@@ -16,7 +16,6 @@ import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RoiResults } from "./roi-results";
-import { Separator } from "../ui/separator";
 
 const formSchema = z.object({
   scheduledCalls: z.coerce
@@ -40,7 +39,7 @@ export function RoiCalculator() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       scheduledCalls: 100,
-      currentNoShowRate: 50, // Default no-show rate
+      currentNoShowRate: 50,
       currentCloseRate: 20,
       averageTicket: 1000,
     },
@@ -54,7 +53,6 @@ export function RoiCalculator() {
   const currentCloseRate = values.currentCloseRate / 100 || 0;
   const averageTicket = values.averageTicket || 0;
 
-  // Calculations
   const lostCalls = scheduledCalls * currentNoShowRate;
   const moneyLostMonthly = lostCalls * currentCloseRate * averageTicket;
 
@@ -66,120 +64,123 @@ export function RoiCalculator() {
     return { extraMonthlyRevenue, extraAnnualRevenue };
   };
 
-  const conservativeScenario = calculateScenario(0.10); // 10% reduction in no-show rate
-  const mediumScenario = calculateScenario(0.15); // 15% reduction in no-show rate
-  const optimisticScenario = calculateScenario(0.20); // 20% reduction in no-show rate
+  // Updated scenarios as requested
+  const conservativeScenario = calculateScenario(0.20); // 20% reduction
+  const mediumScenario = calculateScenario(0.40); // 40% reduction
+  const optimisticScenario = calculateScenario(0.80); // 80% reduction
 
   const currentMonthlyRevenue = scheduledCalls * (1 - currentNoShowRate) * currentCloseRate * averageTicket;
   const mediumScenarioMonthlyRevenue = currentMonthlyRevenue + mediumScenario.extraMonthlyRevenue;
-
-  // New calculation: Potential revenue if no-show rate was 0%
   const potentialRevenueAtZeroNoShow = scheduledCalls * currentCloseRate * averageTicket;
 
   return (
-    <Card className="bg-card text-card-foreground shadow-lg border-border">
-      <CardHeader>
-        <CardTitle className="text-2xl text-primary">Calculadora de No Show</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form className="space-y-6">
-            <FormField
-              control={form.control}
-              name="scheduledCalls"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-muted-foreground">Número de llamadas agendadas al mes</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      {...field}
-                      onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
-                      className="bg-input text-foreground border-border focus-visible:ring-ring"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      {/* Sidebar-like Input Section */}
+      <div className="lg:col-span-4 space-y-6">
+        <Card className="bg-card text-card-foreground shadow-lg border-border sticky top-8">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-xl text-primary">Calculadora de No Show</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="scheduledCalls"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-xs font-semibold uppercase text-muted-foreground">Llamadas/mes</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          {...field}
+                          onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
+                          className="h-9"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="currentNoShowRate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-muted-foreground">Tasa de No Show actual (%)</FormLabel>
-                  <FormControl>
-                    <Slider
-                      min={0}
-                      max={100}
-                      step={1}
-                      value={[field.value]}
-                      onValueChange={(val) => field.onChange(val[0])}
-                      className="w-full"
-                    />
-                  </FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
-                    className="mt-2 bg-input text-foreground border-border focus-visible:ring-ring"
-                  />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="currentNoShowRate"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-xs font-semibold uppercase text-muted-foreground">No Show actual (%)</FormLabel>
+                      <FormControl>
+                        <Slider
+                          min={0}
+                          max={100}
+                          step={1}
+                          value={[field.value]}
+                          onValueChange={(val) => field.onChange(val[0])}
+                        />
+                      </FormControl>
+                      <Input
+                        type="number"
+                        {...field}
+                        onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
+                        className="h-9 mt-1"
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="currentCloseRate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-muted-foreground">Tasa de Cierre actual (%)</FormLabel>
-                  <FormControl>
-                    <Slider
-                      min={0}
-                      max={100}
-                      step={1}
-                      value={[field.value]}
-                      onValueChange={(val) => field.onChange(val[0])}
-                      className="w-full"
-                    />
-                  </FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
-                    className="mt-2 bg-input text-foreground border-border focus-visible:ring-ring"
-                  />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="currentCloseRate"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-xs font-semibold uppercase text-muted-foreground">Cierre actual (%)</FormLabel>
+                      <FormControl>
+                        <Slider
+                          min={0}
+                          max={100}
+                          step={1}
+                          value={[field.value]}
+                          onValueChange={(val) => field.onChange(val[0])}
+                        />
+                      </FormControl>
+                      <Input
+                        type="number"
+                        {...field}
+                        onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
+                        className="h-9 mt-1"
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="averageTicket"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-muted-foreground">Ticket Medio de venta (€)</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      {...field}
-                      onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
-                      className="bg-input text-foreground border-border focus-visible:ring-ring"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form>
+                <FormField
+                  control={form.control}
+                  name="averageTicket"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-xs font-semibold uppercase text-muted-foreground">Ticket Medio (€)</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          {...field}
+                          onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
+                          className="h-9"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
+      </div>
 
-        <Separator className="my-8 bg-border" />
-
+      {/* Results Section */}
+      <div className="lg:col-span-8">
         <RoiResults
           moneyLostMonthly={moneyLostMonthly}
           conservativeScenario={conservativeScenario}
@@ -189,7 +190,7 @@ export function RoiCalculator() {
           mediumScenarioMonthlyRevenue={mediumScenarioMonthlyRevenue}
           potentialRevenueAtZeroNoShow={potentialRevenueAtZeroNoShow}
         />
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
