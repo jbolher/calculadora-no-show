@@ -137,7 +137,7 @@ export function RoiResults({
           {[
             { label: "Conservador", value: conservativeScenario.extraMonthlyRevenue, icon: ShieldCheck, color: "text-[#B53032]", bg: "bg-[#B53032]/5", desc: "Mínimo garantizado" },
             { label: "Probable", value: mediumScenario.extraMonthlyRevenue, icon: Wallet, color: "text-[#2D6A4F]", bg: "bg-[#2D6A4F]/10", desc: "Resultado esperado" },
-            { label: "Optimista", value: optimisticScenario.extraMonthlyRevenue, icon: Rocket, color: "text-[#A8DADC]", bg: "bg-[#A8DADC]/20", desc: "Máximo potencial" },
+            { label: "Optimista", value: optimisticScenario.extraMonthlyRevenue, icon: Rocket, color: "text-[#5F8649]", bg: "bg-[#5F8649]/10", desc: "Máximo potencial" },
           ].map((s, i) => (
             <Card key={i} className="border-none shadow-2xl bg-background rounded-2xl hover:translate-y-[-4px] transition-all duration-300">
               <CardContent className="p-6">
