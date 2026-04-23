@@ -30,8 +30,8 @@ export function RoiResults({
     new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(value);
 
   const chartData = [
-    { name: "Actual", value: currentMonthlyRevenue, color: "#93AC72" },
-    { name: "Con IA", value: mediumScenarioMonthlyRevenue, color: "#de6560" },
+    { name: "Actual", value: currentMonthlyRevenue, color: "#B08968" }, // Tan
+    { name: "Con IA", value: mediumScenarioMonthlyRevenue, color: "#2D6A4F" }, // Green
   ];
 
   const demoUrl = "https://vsl.bolherconsulting.com/vsl-1?utm_medium=leadmagnet&utm_content=calculadora-noshow";
@@ -41,10 +41,10 @@ export function RoiResults({
       {/* Top Row: Main Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Annual Recovery Widget */}
-        <Card className="border-none shadow-sm bg-white/50 backdrop-blur-sm rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
+        <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-2xl bg-[#93AC72]/10 text-[#93AC72]">
+              <div className="p-3 rounded-2xl bg-[#2D6A4F]/10 text-[#2D6A4F]">
                 <Rocket size={24} />
               </div>
               <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Recuperación Anual</span>
@@ -59,30 +59,30 @@ export function RoiResults({
         </Card>
 
         {/* Monthly Loss Widget */}
-        <Card className="border-none shadow-sm bg-[#de6560]/5 backdrop-blur-sm rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
+        <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-2xl bg-[#de6560]/10 text-[#de6560]">
+              <div className="p-3 rounded-2xl bg-[#7F5539]/10 text-[#7F5539]">
                 <AlertCircle size={24} />
               </div>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#de6560]/70">Pérdida Mensual</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#7F5539]/70">Pérdida Mensual</span>
             </div>
             <div>
-              <h3 className="text-4xl font-black text-[#de6560] tracking-tight">
+              <h3 className="text-4xl font-black text-[#7F5539] tracking-tight">
                 <AnimatedNumber value={moneyLostMonthly} formatter={formatCurrency} />
               </h3>
-              <p className="text-sm text-[#de6560]/60 mt-2">Dinero que se escapa por No-Shows cada mes</p>
+              <p className="text-sm text-[#7F5539]/60 mt-2">Dinero que se escapa por No-Shows cada mes</p>
             </div>
           </CardContent>
         </Card>
       </div>
 
       {/* Chart Widget */}
-      <Card className="border-none shadow-sm bg-white/50 backdrop-blur-sm rounded-3xl overflow-hidden">
+      <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden">
         <CardContent className="p-8">
           <div className="flex items-center justify-between mb-8">
             <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-              <TrendingUp size={18} className="text-[#93AC72]" />
+              <TrendingUp size={18} className="text-[#2D6A4F]" />
               Impacto en Facturación Mensual
             </h3>
           </div>
@@ -108,7 +108,7 @@ export function RoiResults({
                   content={({ active, payload }) => {
                     if (active && payload && payload.length) {
                       return (
-                        <div className="bg-white p-4 shadow-xl rounded-2xl border-none">
+                        <div className="bg-background p-4 shadow-xl rounded-2xl border border-border/20">
                           <p className="text-xs font-bold text-muted-foreground uppercase mb-1">{payload[0].payload.name}</p>
                           <p className="text-lg font-black text-foreground">{formatCurrency(payload[0].value as number)}</p>
                         </div>
@@ -135,11 +135,11 @@ export function RoiResults({
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
-            { label: "Conservador", value: conservativeScenario.extraMonthlyRevenue, icon: ShieldCheck, color: "text-[#93AC72]", bg: "bg-[#93AC72]/5", desc: "Mínimo garantizado" },
-            { label: "Probable", value: mediumScenario.extraMonthlyRevenue, icon: Wallet, color: "text-[#93AC72]", bg: "bg-[#93AC72]/10", desc: "Resultado esperado" },
-            { label: "Optimista", value: optimisticScenario.extraMonthlyRevenue, icon: Rocket, color: "text-[#93AC72]", bg: "bg-[#93AC72]/20", desc: "Máximo potencial" },
+            { label: "Conservador", value: conservativeScenario.extraMonthlyRevenue, icon: ShieldCheck, color: "text-[#B08968]", bg: "bg-[#B08968]/5", desc: "Mínimo garantizado" },
+            { label: "Probable", value: mediumScenario.extraMonthlyRevenue, icon: Wallet, color: "text-[#2D6A4F]", bg: "bg-[#2D6A4F]/10", desc: "Resultado esperado" },
+            { label: "Optimista", value: optimisticScenario.extraMonthlyRevenue, icon: Rocket, color: "text-[#A8DADC]", bg: "bg-[#A8DADC]/20", desc: "Máximo potencial" },
           ].map((s, i) => (
-            <Card key={i} className="border-none shadow-sm bg-white/50 backdrop-blur-sm rounded-2xl hover:translate-y-[-4px] transition-all duration-300">
+            <Card key={i} className="border-none shadow-2xl bg-background rounded-2xl hover:translate-y-[-4px] transition-all duration-300">
               <CardContent className="p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <div className={`p-2 rounded-xl ${s.bg} ${s.color}`}>
@@ -161,7 +161,7 @@ export function RoiResults({
       <div className="pt-4">
         <Button
           size="lg"
-          className="w-full h-16 rounded-2xl bg-[#93AC72] hover:bg-[#93AC72]/90 text-white font-bold text-lg shadow-lg shadow-[#93AC72]/20 group transition-all duration-300"
+          className="w-full h-16 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-white font-bold text-lg shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300"
           onClick={() => window.open(demoUrl, "_blank")}
         >
           <span>Agendar Demo y Recuperar Ingresos</span>
