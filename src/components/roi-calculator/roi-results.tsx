@@ -29,7 +29,7 @@ export function RoiResults({
     new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(value);
 
   const chartData = [
-    { name: "Actual", value: currentMonthlyRevenue, color: "#a7c957" },
+    { name: "Actual", value: currentMonthlyRevenue, color: "#93AC72" },
     { name: "Con IA", value: mediumScenarioMonthlyRevenue, color: "#de6560" },
   ];
 
@@ -81,13 +81,13 @@ export function RoiResults({
           Escenarios de recuperación con IA
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <Card className="bg-card" style={{ borderColor: '#a7c95733' }}>
+          <Card className="bg-card" style={{ borderColor: '#93AC7233' }}>
             <CardContent className="pt-4">
               <div className="flex items-center gap-2 mb-2">
-                <ShieldCheck style={{ color: '#a7c957' }} size={14} />
+                <ShieldCheck style={{ color: '#93AC72' }} size={14} />
                 <span className="text-[10px] font-bold uppercase">Conservador (20%)</span>
               </div>
-              <p className="text-xl font-bold" style={{ color: '#a7c957' }}>{formatCurrency(conservativeScenario.extraMonthlyRevenue)}</p>
+              <p className="text-xl font-bold" style={{ color: '#93AC72' }}>{formatCurrency(conservativeScenario.extraMonthlyRevenue)}</p>
               <p className="text-[9px] text-muted-foreground mt-1">Garantizado por contrato.</p>
             </CardContent>
           </Card>
@@ -117,14 +117,14 @@ export function RoiResults({
       </div>
 
       {/* BLOQUE 3: Resultados (Potencial Perdido) */}
-      <Card className="bg-destructive/5 border-destructive/20 overflow-hidden">
+      <Card className="overflow-hidden" style={{ backgroundColor: '#de65600d', borderColor: '#de656033' }}>
         <CardContent className="pt-6">
           <div className="flex items-center gap-2 mb-2">
-            <AlertCircle className="text-destructive" size={18} />
-            <h3 className="text-sm font-bold uppercase tracking-wider text-destructive">Resultados: Potencial perdido</h3>
+            <AlertCircle style={{ color: '#de6560' }} size={18} />
+            <h3 className="text-sm font-bold uppercase tracking-wider" style={{ color: '#de6560' }}>Resultados: Potencial perdido</h3>
           </div>
           <div className="flex flex-col md:flex-row md:items-end gap-2 md:gap-4">
-            <p className="text-4xl font-black text-destructive">{formatCurrency(moneyLostMonthly)}</p>
+            <p className="text-4xl font-black" style={{ color: '#de6560' }}>{formatCurrency(moneyLostMonthly)}</p>
             <div className="space-y-1">
               <p className="text-xs text-muted-foreground">es lo que dejas de ingresar cada mes por los No-Shows.</p>
               <p className="text-[10px] text-muted-foreground italic">
