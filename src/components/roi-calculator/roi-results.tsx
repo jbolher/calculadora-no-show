@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import { Button } from "@/components/ui/button";
@@ -26,12 +26,24 @@ export function RoiResults({
   mediumScenarioMonthlyRevenue,
   potentialRevenueAtZeroNoShow,
 }: RoiResultsProps) {
-  const formatCurrency = (value: number) =>
-    new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(value);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const formatCurrency = (value: number) => {
+    if (!mounted) return `${Math.round(value)} €`;
+    return new Intl.NumberFormat("es-ES", { 
+      style: "currency", 
+      currency: "EUR", 
+      maximumFractionDigits: 0 
+    }).format(value);
+  };
 
   const chartData = [
-    { name: "Actual", value: currentMonthlyRevenue, color: "#B53032" }, // Red
-    { name: "Con IA", value: mediumScenarioMonthlyRevenue, color: "#2D6A4F" }, // Green
+    { name: "Actual", value: currentMonthlyRevenue, color: "#B53032" },
+    { name: "Con IA", value: mediumScenarioMonthlyRevenue, color: "#2D6A4F" },
   ];
 
   const demoUrl = "https://vsl.bolherconsulting.com/vsl-1?utm_medium=leadmagnet&utm_content=calculadora-noshow";

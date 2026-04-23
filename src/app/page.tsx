@@ -1,8 +1,15 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { RoiCalculator } from "@/components/roi-calculator/roi-calculator";
 
 export default function RoiCalculatorPage() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/10">
       <div className="max-w-6xl mx-auto px-6 py-12 md:py-20">
@@ -22,7 +29,7 @@ export default function RoiCalculatorPage() {
         
         <footer className="mt-24 pt-8 border-t border-foreground/5 text-center">
           <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
-            © {new Date().getFullYear()} Bolher Consulting · Todos los derechos reservados
+            © {mounted ? new Date().getFullYear() : "2025"} Bolher Consulting · Todos los derechos reservados
           </p>
         </footer>
       </div>
