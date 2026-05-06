@@ -6,8 +6,7 @@ import { Button } from "@/components/ui/button";
 import { NoShowCalculator } from "./no-show-calculator";
 import { LeadsCalculator } from "./leads-calculator";
 import { ArrowRight } from "lucide-react";
-
-const demoUrl = "https://vsl.bolherconsulting.com/vsl-1?utm_medium=leadmagnet&utm_content=calculadora-noshow";
+import { BookingModal } from "./booking-modal";
 
 export function RoiCalculator() {
   return (
@@ -27,14 +26,15 @@ export function RoiCalculator() {
             Llamadas Agendadas y Asistencia
           </TabsTrigger>
         </TabsList>
-        <Button
-          size="lg"
-          className="h-12 px-6 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-sm shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300 shrink-0"
-          onClick={() => window.open(demoUrl, "_blank")}
-        >
-          <span>Agendar llamada</span>
-          <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform duration-300" size={16} />
-        </Button>
+        <BookingModal>
+          <Button
+            size="lg"
+            className="h-12 px-6 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-sm shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300 shrink-0"
+          >
+            <span>Agendar llamada</span>
+            <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform duration-300" size={16} />
+          </Button>
+        </BookingModal>
       </div>
       <TabsContent value="noshow" className="mt-0">
         <NoShowCalculator />

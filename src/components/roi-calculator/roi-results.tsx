@@ -2,10 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import { TrendingUp, AlertCircle, ShieldCheck, Rocket, Wallet, ArrowRight } from "lucide-react";
 import { AnimatedNumber } from "./animated-number";
+import { BookingModal } from "./booking-modal";
+import { Button } from "@/components/ui/button";
 
 interface RoiResultsProps {
   moneyLostMonthly: number;
@@ -16,8 +17,6 @@ interface RoiResultsProps {
   mediumScenarioMonthlyRevenue: number;
   potentialRevenueAtZeroNoShow: number;
 }
-
-const demoUrl = "https://vsl.bolherconsulting.com/vsl-1?utm_medium=leadmagnet&utm_content=calculadora-noshow";
 
 export function RoiResults({
   moneyLostMonthly,
@@ -174,14 +173,15 @@ export function RoiResults({
 
       {/* CTA */}
       <div className="flex justify-center pt-4">
-        <Button
-          size="lg"
-          className="h-16 px-10 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-lg shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300"
-          onClick={() => window.open(demoUrl, "_blank")}
-        >
-          <span>Agendar llamada y recuperar ingresos</span>
-          <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform duration-300" size={20} />
-        </Button>
+        <BookingModal size="lg">
+          <Button
+            size="lg"
+            className="h-16 px-10 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-lg shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300"
+          >
+            <span>Agendar llamada y recuperar ingresos</span>
+            <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform duration-300" size={20} />
+          </Button>
+        </BookingModal>
       </div>
     </div>
   );
