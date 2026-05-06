@@ -8,11 +8,11 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
+  Tooltip as RechartsTooltip,
   ResponsiveContainer,
-  Legend,
 } from "recharts";
-import { Rocket, AlertCircle, TrendingUp, ShieldCheck, Wallet } from "lucide-react";
+import { Rocket, AlertCircle, TrendingUp, ShieldCheck, Wallet, Info, Phone } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { AnimatedNumber } from "./animated-number";
 
 interface ScenarioData {
@@ -77,6 +77,8 @@ export function LeadsResults({
     return (value * 100).toFixed(1).replace(".", ",") + "%";
   };
 
+  const extraLlamadasMedio = Math.round(medioScenario.agendados_mejorados - llamadas_agendadas);
+
   // Datos para el gráfico de volumen (llamadas, presentados, cierres)
   const volumeData = [
     {
@@ -120,6 +122,13 @@ export function LeadsResults({
     optimista: "#4A6741",
   };
 
+  const legendItems = [
+    { label: "Actual", color: colors.actual },
+    { label: "Base +30%", color: colors.base },
+    { label: "Medio +42,5%", color: colors.medio },
+    { label: "Optimista +55%", color: colors.optimista },
+  ];
+
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
@@ -143,12 +152,20 @@ export function LeadsResults({
     return null;
   };
 
+  // Datos para la tabla de cálculos
+  const tableRows = [
+    { metric: "Llamadas agendadas", actual: Math.round(llamadas_agendadas), base: Math.round(baseScenario.agendados_mejorados), medio: Math.round(medioScenario.agendados_mejorados), optimista: Math.round(optimistaScenario.agendados_mejorados), isCurrency: false },
+    { metric: "Se presentan", actual: Math.round(presentados_actuales), base: Math.round(baseScenario.presentados_mejorados), medio: Math.round(medioScenario.presentados_mejorados), optimista: Math.round(optimistaScenario.presentados_mejorados), isCurrency: false },
+    { metric: "Cierres", actual: Math.round(cierres_actuales), base: Math.round(baseScenario.cierres_mejorados), medio: Math.round(medioScenario.cierres_mejorados), optimista: Math.round(optimistaScenario.cierres_mejorados), isCurrency: false },
+    { metric: "Ingresos mensuales", actual: Math.round(ingresos_actuales), base: Math.round(baseScenario.ingresos_mejorados), medio: Math.round(medioScenario.ingresos_mejorados), optimista: Math.round(optimistaScenario.ingresos_mejorados), isCurrency: true },
+  ];
+
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
       {/* ═══════════════════════════════════════════════════════
-          SECCIÓN 1: Dos tarjetas KPI lado a lado
+          SECCIÓN 1: Tres tarjetas KPI lado a lado
           ═══════════════════════════════════════════════════════ */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Tarjeta KPI 1 — Potencial de mejora mensual */}
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
@@ -157,7 +174,7 @@ export function LeadsResults({
                 <Rocket size={24} />
               </div>
               <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                Potencial de mejora mensual
+                Ingresos extra al mes
               </span>
             </div>
             <div>
@@ -165,7 +182,7 @@ export function LeadsResults({
                 +<AnimatedNumber value={medioScenario.beneficio} formatter={formatCurrency} />
               </h3>
               <p className="text-sm text-muted-foreground mt-2">
-                Ingresos extra con captación optimizada
+                Con captación y asistencia optimizadas
               </p>
             </div>
           </CardContent>
@@ -179,7 +196,7 @@ export function LeadsResults({
                 <AlertCircle size={24} />
               </div>
               <span className="text-[10px] font-bold uppercase tracking-widest text-[#B53032]/70">
-                Pérdida por no optimizar
+                Dinero que dejas de ganar
               </span>
             </div>
             <div>
@@ -187,7 +204,29 @@ export function LeadsResults({
                 <AnimatedNumber value={baseScenario.beneficio} formatter={formatCurrency} />
               </h3>
               <p className="text-sm text-[#B53032]/60 mt-2">
-                Mínimo que dejas de ingresar cada mes
+                Mínimo mensual sin optimizar tu funnel
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Tarjeta KPI 3 — Más llamadas agendadas */}
+        <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
+          <CardContent className="p-8 flex flex-col justify-between h-full">
+            <div className="flex items-center justify-between mb-4">
+              <div className="p-3 rounded-2xl bg-[#345D36]/10 text-[#345D36]">
+                <Phone size={24} />
+              </div>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                Llamadas adicionales
+              </span>
+            </div>
+            <div>
+              <h3 className="text-4xl font-black text-foreground tracking-tight">
+                +<AnimatedNumber value={extraLlamadasMedio} formatter={formatNumber} />
+              </h3>
+              <p className="text-sm text-muted-foreground mt-2">
+                Más agendadas al mes en escenario medio
               </p>
             </div>
           </CardContent>
@@ -199,11 +238,73 @@ export function LeadsResults({
           ═══════════════════════════════════════════════════════ */}
       <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden">
         <CardContent className="p-8">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-6">
             <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
               <TrendingUp size={18} className="text-[#4A6741]" />
-              Comparativa de escenarios
+              Impacto por escenario
             </h3>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button className="p-2 rounded-full hover:bg-muted transition-colors">
+                  <Info size={18} className="text-muted-foreground" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="left" className="w-[520px] max-w-[520px] p-0 bg-background border shadow-xl rounded-2xl overflow-hidden">
+                <div className="p-4">
+                  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
+                    Desglose de cálculos por escenario
+                  </p>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs">
+                      <thead>
+                        <tr className="border-b border-border">
+                          <th className="text-left py-2 px-2 font-bold text-muted-foreground uppercase tracking-wider">Métrica</th>
+                          <th className="text-right py-2 px-2 font-bold text-muted-foreground uppercase tracking-wider">Actual</th>
+                          <th className="text-right py-2 px-2 font-bold text-[#8BA882] uppercase tracking-wider">Base +30%</th>
+                          <th className="text-right py-2 px-2 font-bold text-[#6B8F62] uppercase tracking-wider">Medio +42,5%</th>
+                          <th className="text-right py-2 px-2 font-bold text-[#4A6741] uppercase tracking-wider">Optimista +55%</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {tableRows.map((row, idx) => (
+                          <tr key={idx} className={idx % 2 === 0 ? "bg-muted/30" : ""}>
+                            <td className="py-2 px-2 font-medium text-foreground">{row.metric}</td>
+                            <td className="text-right py-2 px-2 text-muted-foreground font-mono">
+                              {row.isCurrency ? formatCurrency(row.actual) : formatNumber(row.actual)}
+                            </td>
+                            <td className="text-right py-2 px-2 text-muted-foreground font-mono">
+                              {row.isCurrency ? formatCurrency(row.base) : formatNumber(row.base)}
+                            </td>
+                            <td className="text-right py-2 px-2 text-muted-foreground font-mono">
+                              {row.isCurrency ? formatCurrency(row.medio) : formatNumber(row.medio)}
+                            </td>
+                            <td className="text-right py-2 px-2 text-muted-foreground font-mono">
+                              {row.isCurrency ? formatCurrency(row.optimista) : formatNumber(row.optimista)}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-border/50 text-[10px] text-muted-foreground">
+                    <p>Leads mensuales: {formatNumber(leads_mensuales)} · No Show: {noshow}% · Ticket: {formatCurrency(ticket)} · Cierre: {cierre}%</p>
+                  </div>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+
+          {/* Leyenda compartida */}
+          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-8">
+            {legendItems.map((item) => (
+              <div key={item.label} className="flex items-center gap-2">
+                <div
+                  className="w-3 h-3 rounded-full"
+                  style={{ backgroundColor: item.color }}
+                />
+                <span className="text-xs font-medium text-muted-foreground">{item.label}</span>
+              </div>
+            ))}
           </div>
 
           {/* Gráfico de volumen: llamadas, presentados, cierres */}
@@ -211,7 +312,7 @@ export function LeadsResults({
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={volumeData}
-                margin={{ top: 20, right: 0, left: -20, bottom: 0 }}
+                margin={{ top: 10, right: 0, left: -20, bottom: 0 }}
                 barGap={4}
               >
                 <CartesianGrid
@@ -238,12 +339,7 @@ export function LeadsResults({
                     fontSize: 10,
                   }}
                 />
-                <Tooltip content={<CustomTooltip />} />
-                <Legend
-                  wrapperStyle={{ fontSize: "11px", paddingBottom: "16px" }}
-                  iconType="circle"
-                  iconSize={8}
-                />
+                <RechartsTooltip content={<CustomTooltip />} />
                 <Bar
                   dataKey="Actual"
                   fill={colors.actual}
@@ -278,7 +374,7 @@ export function LeadsResults({
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={revenueData}
-                  margin={{ top: 20, right: 0, left: -20, bottom: 0 }}
+                  margin={{ top: 10, right: 0, left: -20, bottom: 0 }}
                   barGap={4}
                 >
                   <CartesianGrid
@@ -306,12 +402,7 @@ export function LeadsResults({
                     }}
                     tickFormatter={(v) => `${Math.round(v / 1000)}k`}
                   />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Legend
-                    wrapperStyle={{ fontSize: "11px", paddingBottom: "16px" }}
-                    iconType="circle"
-                    iconSize={8}
-                  />
+                  <RechartsTooltip content={<CustomTooltip />} />
                   <Bar
                     dataKey="Actual"
                     fill={colors.actual}
@@ -344,110 +435,33 @@ export function LeadsResults({
       </Card>
 
       {/* ═══════════════════════════════════════════════════════
-          SECCIÓN 3: Escenarios de mejora
+          SECCIÓN 3: Escenarios de mejora (igual que Asistencia)
           ═══════════════════════════════════════════════════════ */}
       <div className="space-y-4">
         <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60 px-2">
-          Escenarios de mejora
+          Proyección de ingresos extra
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
-            {
-              label: "Base",
-              factor: "+30%",
-              booking: baseScenario.booking_mejorado,
-              beneficio: baseScenario.beneficio,
-              ingresos: baseScenario.ingresos_mejorados,
-              icon: ShieldCheck,
-              color: "text-[#5F8649]",
-              bg: "bg-[#5F8649]/10",
-              border: "border-transparent",
-            },
-            {
-              label: "Medio",
-              factor: "+42,5%",
-              booking: medioScenario.booking_mejorado,
-              beneficio: medioScenario.beneficio,
-              ingresos: medioScenario.ingresos_mejorados,
-              icon: Wallet,
-              color: "text-[#4A6741]",
-              bg: "bg-[#4A6741]/10",
-              border: "border-t-[3px] border-t-[#4A6741]",
-              recommended: true,
-            },
-            {
-              label: "Optimista",
-              factor: "+55%",
-              booking: optimistaScenario.booking_mejorado,
-              beneficio: optimistaScenario.beneficio,
-              ingresos: optimistaScenario.ingresos_mejorados,
-              icon: Rocket,
-              color: "text-[#2F2B2B]",
-              bg: "bg-[#2F2B2B]/10",
-              border: "border-transparent",
-            },
+            { label: "Base", percentage: "+30%", value: baseScenario.beneficio, icon: ShieldCheck, color: "text-[#5F8649]", bg: "bg-[#5F8649]/10", desc: "Mínimo garantizado" },
+            { label: "Medio", percentage: "+42,5%", value: medioScenario.beneficio, icon: Wallet, color: "text-[#4A6741]", bg: "bg-[#4A6741]/10", desc: "Resultado esperado" },
+            { label: "Optimista", percentage: "+55%", value: optimistaScenario.beneficio, icon: Rocket, color: "text-[#2F2B2B]", bg: "bg-[#2F2B2B]/10", desc: "Máximo potencial" },
           ].map((s, i) => (
-            <Card
-              key={i}
-              className={`border-none shadow-2xl bg-background rounded-2xl hover:translate-y-[-4px] transition-all duration-300 relative overflow-hidden ${s.border}`}
-            >
-              {s.recommended && (
-                <div className="absolute top-4 right-4">
-                  <span className="text-[9px] font-bold uppercase tracking-wider bg-[#4A6741] text-white px-2 py-1 rounded-full">
-                    Recomendado
-                  </span>
-                </div>
-              )}
+            <Card key={i} className="border-none shadow-2xl bg-background rounded-2xl hover:translate-y-[-4px] transition-all duration-300">
               <CardContent className="p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <div className={`p-2 rounded-xl ${s.bg} ${s.color}`}>
                     <s.icon size={16} />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                      {s.label}
-                    </span>
-                    <span className={`text-[10px] font-bold ${s.color}`}>
-                      {s.factor}
-                    </span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{s.label}</span>
+                    <span className={`text-[10px] font-bold ${s.color}`}>{s.percentage}</span>
                   </div>
                 </div>
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider">
-                      Booking rate
-                    </p>
-                    <p className="text-lg font-black text-foreground">
-                      {formatPercent(s.booking)}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider">
-                      Ingresos proyectados
-                    </p>
-                    <p className="text-lg font-black text-foreground">
-                      <AnimatedNumber
-                        value={s.ingresos}
-                        formatter={formatCurrency}
-                      />
-                      <span className="text-xs font-medium text-muted-foreground">
-                        /mes
-                      </span>
-                    </p>
-                  </div>
-                  <div className="pt-2 border-t border-border/10">
-                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider">
-                      Diferencia mensual
-                    </p>
-                    <p className="text-2xl font-black text-foreground">
-                      +
-                      <AnimatedNumber
-                        value={s.beneficio}
-                        formatter={formatCurrency}
-                      />
-                    </p>
-                  </div>
-                </div>
+                <p className="text-2xl font-black text-foreground">
+                  <AnimatedNumber value={s.value} formatter={formatCurrency} />
+                </p>
+                <p className="text-[10px] text-muted-foreground mt-1">{s.desc}</p>
               </CardContent>
             </Card>
           ))}
