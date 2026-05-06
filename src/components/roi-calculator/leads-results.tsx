@@ -13,7 +13,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Rocket, AlertCircle, TrendingUp, ShieldCheck, Wallet, Info, Phone, Users, ArrowRight } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { AnimatedNumber } from "./animated-number";
 
 const BOOKING_URL = "https://vsl.bolherconsulting.com/vsl-1?utm_medium=leadmagnet&utm_content=calculadora-noshow#calendar-YaKfIuQyV2";
@@ -277,13 +277,18 @@ export function LeadsResults({
               <TrendingUp size={18} className="text-[#4A6741]" />
               Impacto por escenario
             </h3>
-            <Tooltip>
-              <TooltipTrigger asChild>
+            <Popover>
+              <PopoverTrigger asChild>
                 <button className="p-2 rounded-full hover:bg-muted transition-colors">
                   <Info size={20} className="text-muted-foreground" />
                 </button>
-              </TooltipTrigger>
-              <TooltipContent side="left" className="w-[540px] max-w-[540px] p-0 bg-background border border-[#B53032]/20 shadow-xl rounded-2xl overflow-hidden">
+              </PopoverTrigger>
+              <PopoverContent 
+                side="bottom" 
+                align="end" 
+                sideOffset={8}
+                className="w-[calc(100vw-3rem)] md:w-auto md:max-w-[540px] p-0 bg-background border border-[#B53032]/20 shadow-xl rounded-2xl overflow-hidden"
+              >
                 <div className="p-4">
                   <p className="text-xs font-bold uppercase tracking-wider text-[#B53032] mb-3">
                     Desglose de cálculos por escenario
@@ -324,8 +329,8 @@ export function LeadsResults({
                     <p>Leads mensuales: {formatNumber(leads_mensuales)} · Asistencia actual: {tasaAsistenciaActual.toFixed(0)}% · Asistencia mejorada: {tasaAsistenciaMejorada.toFixed(0)}% · Ticket: {formatCurrency(ticket)} · Cierre: {cierre}%</p>
                   </div>
                 </div>
-              </TooltipContent>
-            </Tooltip>
+              </PopoverContent>
+            </Popover>
           </div>
 
           {/* Leyenda compartida */}
