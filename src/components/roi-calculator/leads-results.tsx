@@ -293,11 +293,11 @@ export function LeadsResults({
                   <p className="text-xs font-bold uppercase tracking-wider text-[#B53032] mb-3">
                     Desglose de cálculos por escenario
                   </p>
-                  <div className="w-full h-px bg-[#B53032]/30 shadow-[0_1px_4px_rgba(181,48,50,0.15)] mb-3" />
+                  <div className="w-full h-px bg-[#B53032]/30 mb-3" />
                   <div className="overflow-x-auto">
                     <table className="w-full text-xs">
                       <thead>
-                        <tr className="border-b-2 border-[#B53032]/20 shadow-[0_2px_4px_rgba(181,48,50,0.08)]">
+                        <tr className="border-b-2 border-[#B53032]/20">
                           <th className="text-left py-2 px-2 font-bold text-[#B53032] uppercase tracking-wider">Métrica</th>
                           <th className="text-right py-2 px-2 font-bold text-muted-foreground uppercase tracking-wider">Actual</th>
                           <th className="text-right py-2 px-2 font-bold text-[#8BA882] uppercase tracking-wider">Base +30%</th>
@@ -326,7 +326,7 @@ export function LeadsResults({
                       </tbody>
                     </table>
                   </div>
-                  <div className="mt-3 pt-3 border-t border-[#B53032]/20 shadow-[0_-1px_3px_rgba(181,48,50,0.08)] text-[10px] text-[#B53032]/70">
+                  <div className="mt-3 pt-3 border-t border-[#B53032]/20 text-[10px] text-[#B53032]/70">
                     <p>Leads mensuales: {formatNumber(leads_mensuales)} · Asistencia actual: {tasaAsistenciaActual.toFixed(2)}% · Asistencia mejorada: {tasaAsistenciaMejorada.toFixed(2)}% · Ticket: {formatCurrency(ticket)} · Cierre: {cierre}%</p>
                   </div>
                 </div>
@@ -539,7 +539,7 @@ export function LeadsResults({
                       <span className="text-xs font-medium text-muted-foreground">/mes</span>
                     </p>
                   </div>
-                  <div className="pt-2 border-t-2 border-[#B53032]/20 shadow-[0_-1px_4px_rgba(181,48,50,0.08)]">
+                  <div className="pt-2 border-t border-border/10">
                     <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Diferencia mensual</p>
                     <p className="text-2xl font-black text-foreground">+<AnimatedNumber value={s.beneficio} formatter={formatCurrency} /></p>
                   </div>
