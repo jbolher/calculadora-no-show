@@ -13,13 +13,13 @@ export function RoiCalculator() {
           value="noshow" 
           className="flex-1 rounded-xl text-xs font-bold uppercase tracking-wider data-[state=active]:bg-[#2F2B2B] data-[state=active]:text-[#FDFDF0] data-[state=inactive]:text-muted-foreground transition-all"
         >
-          No-Show
+          Asistencia
         </TabsTrigger>
         <TabsTrigger 
           value="leads" 
           className="flex-1 rounded-xl text-xs font-bold uppercase tracking-wider data-[state=active]:bg-[#2F2B2B] data-[state=active]:text-[#FDFDF0] data-[state=inactive]:text-muted-foreground transition-all"
         >
-          Generación de Leads y No Show
+          Llamadas Agendadas y Asistencia
         </TabsTrigger>
       </TabsList>
       <TabsContent value="noshow" className="mt-0">
