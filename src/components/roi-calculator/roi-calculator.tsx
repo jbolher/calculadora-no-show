@@ -11,7 +11,16 @@ import { BookingModal } from "./booking-modal";
 export function RoiCalculator() {
   return (
     <Tabs defaultValue="noshow" className="w-full">
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+        <BookingModal>
+          <Button
+            size="lg"
+            className="h-12 px-6 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-sm shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300 shrink-0 order-first md:order-none"
+          >
+            <span>Agendar llamada</span>
+            <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform duration-300" size={16} />
+          </Button>
+        </BookingModal>
         <TabsList className="w-full md:w-auto max-w-md bg-background/50 p-1 rounded-2xl border border-border/20">
           <TabsTrigger 
             value="noshow" 
@@ -26,15 +35,6 @@ export function RoiCalculator() {
             Llamadas Agendadas y Asistencia
           </TabsTrigger>
         </TabsList>
-        <BookingModal>
-          <Button
-            size="lg"
-            className="h-12 px-6 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-sm shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300 shrink-0"
-          >
-            <span>Agendar llamada</span>
-            <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform duration-300" size={16} />
-          </Button>
-        </BookingModal>
       </div>
       <TabsContent value="noshow" className="mt-0">
         <NoShowCalculator />
