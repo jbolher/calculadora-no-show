@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
   BarChart,
   Bar,
@@ -11,7 +12,7 @@ import {
   Tooltip as RechartsTooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Rocket, AlertCircle, TrendingUp, ShieldCheck, Wallet, Info, Phone, Users } from "lucide-react";
+import { Rocket, AlertCircle, TrendingUp, ShieldCheck, Wallet, Info, Phone, Users, ArrowRight } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { AnimatedNumber } from "./animated-number";
 
@@ -169,16 +170,18 @@ export function LeadsResults({
     return formatNumber(value);
   };
 
+  const demoUrl = "https://vsl.bolherconsulting.com/vsl-1?utm_medium=leadmagnet&utm_content=calculadora-noshow";
+
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
       {/* ═══════════════════════════════════════════════════════
-          SECCIÓN 1: Cuatro tarjetas KPI
+          SECCIÓN 1: Cuatro tarjetas KPI en grid 2x2
           ═══════════════════════════════════════════════════════ */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Tarjeta KPI 1 — Potencial de mejora mensual */}
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
-            <div className="flex items-center justify-between mb-4 md:mb-6">
+            <div className="flex items-center justify-between mb-6">
               <div className="p-4 rounded-2xl bg-[#4A6741]/10 text-[#4A6741]">
                 <Rocket size={24} />
               </div>
@@ -190,7 +193,7 @@ export function LeadsResults({
               <h3 className="text-4xl font-black text-foreground tracking-tight">
                 +<AnimatedNumber value={medioScenario.beneficio} formatter={formatCurrency} />
               </h3>
-              <p className="text-sm text-muted-foreground mt-2 md:mt-3">
+              <p className="text-sm text-muted-foreground mt-3">
                 Con captación y asistencia optimizadas
               </p>
             </div>
@@ -200,7 +203,7 @@ export function LeadsResults({
         {/* Tarjeta KPI 2 — Pérdida por no optimizar */}
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
-            <div className="flex items-center justify-between mb-4 md:mb-6">
+            <div className="flex items-center justify-between mb-6">
               <div className="p-4 rounded-2xl bg-[#B53032]/10 text-[#B53032]">
                 <AlertCircle size={24} />
               </div>
@@ -212,7 +215,7 @@ export function LeadsResults({
               <h3 className="text-4xl font-black text-[#B53032] tracking-tight">
                 <AnimatedNumber value={baseScenario.beneficio} formatter={formatCurrency} />
               </h3>
-              <p className="text-sm text-[#B53032]/60 mt-2 md:mt-3">
+              <p className="text-sm text-[#B53032]/60 mt-3">
                 Mínimo mensual sin optimizar tu funnel
               </p>
             </div>
@@ -222,7 +225,7 @@ export function LeadsResults({
         {/* Tarjeta KPI 3 — Llamadas agendadas */}
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
-            <div className="flex items-center justify-between mb-4 md:mb-6">
+            <div className="flex items-center justify-between mb-6">
               <div className="p-4 rounded-2xl bg-[#345D36]/10 text-[#345D36]">
                 <Phone size={24} />
               </div>
@@ -234,7 +237,7 @@ export function LeadsResults({
               <h3 className="text-4xl font-black text-foreground tracking-tight">
                 +<AnimatedNumber value={extraLlamadasMedio} formatter={formatNumber} />
               </h3>
-              <p className="text-sm text-muted-foreground mt-2 md:mt-3">
+              <p className="text-sm text-muted-foreground mt-3">
                 Agendadas
               </p>
             </div>
@@ -244,7 +247,7 @@ export function LeadsResults({
         {/* Tarjeta KPI 4 — Mejora en asistencia */}
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
-            <div className="flex items-center justify-between mb-4 md:mb-6">
+            <div className="flex items-center justify-between mb-6">
               <div className="p-4 rounded-2xl bg-[#5F8649]/10 text-[#5F8649]">
                 <Users size={24} />
               </div>
@@ -261,7 +264,7 @@ export function LeadsResults({
                   Como mínimo
                 </span>
               </div>
-              <p className="text-sm text-muted-foreground mt-2 md:mt-3">
+              <p className="text-sm text-muted-foreground mt-3">
                 De {tasaAsistenciaActual.toFixed(0)}% a {tasaAsistenciaMejorada.toFixed(0)}%
               </p>
             </div>
@@ -546,6 +549,21 @@ export function LeadsResults({
             </Card>
           ))}
         </div>
+      </div>
+
+      {/* CTA */}
+      <div className="pt-4">
+        <Button
+          size="lg"
+          className="w-full h-16 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-lg shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300"
+          onClick={() => window.open(demoUrl, "_blank")}
+        >
+          <span>Agendar llamada y recuperar ingresos</span>
+          <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform duration-300" size={20} />
+        </Button>
+        <p className="text-center text-[10px] text-muted-foreground mt-4 uppercase tracking-widest">
+          Potencial total al 0% No-Show: <span className="font-bold text-foreground">{formatCurrency(medioScenario.ingresos_mejorados)}/mes</span>
+        </p>
       </div>
     </div>
   );

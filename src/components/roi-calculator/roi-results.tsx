@@ -179,7 +179,7 @@ export function RoiResults({
           className="w-full h-16 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-lg shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300"
           onClick={() => window.open(demoUrl, "_blank")}
         >
-          <span>Agendar Demo y Recuperar Ingresos</span>
+          <span>Agendar llamada y recuperar ingresos</span>
           <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform duration-300" size={20} />
         </Button>
         <p className="text-center text-[10px] text-muted-foreground mt-4 uppercase tracking-widest">
