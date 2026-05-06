@@ -78,7 +78,8 @@ export function LeadsResults({
   };
 
   const extraLlamadasMedio = Math.round(medioScenario.agendados_mejorados - llamadas_agendadas);
-  const tasaAsistencia = 100 - noshow;
+  const tasaAsistenciaActual = 100 - noshow;
+  const tasaAsistenciaMejorada = 100 - (noshow * 0.8);
 
   // Datos para el gráfico de volumen (llamadas, presentados, cierres)
   const volumeData = [
@@ -155,11 +156,18 @@ export function LeadsResults({
 
   // Datos para la tabla de cálculos
   const tableRows = [
-    { metric: "Llamadas agendadas", actual: Math.round(llamadas_agendadas), base: Math.round(baseScenario.agendados_mejorados), medio: Math.round(medioScenario.agendados_mejorados), optimista: Math.round(optimistaScenario.agendados_mejorados), isCurrency: false },
-    { metric: "Se presentan", actual: Math.round(presentados_actuales), base: Math.round(baseScenario.presentados_mejorados), medio: Math.round(medioScenario.presentados_mejorados), optimista: Math.round(optimistaScenario.presentados_mejorados), isCurrency: false },
-    { metric: "Cierres", actual: Math.round(cierres_actuales), base: Math.round(baseScenario.cierres_mejorados), medio: Math.round(medioScenario.cierres_mejorados), optimista: Math.round(optimistaScenario.cierres_mejorados), isCurrency: false },
-    { metric: "Ingresos mensuales", actual: Math.round(ingresos_actuales), base: Math.round(baseScenario.ingresos_mejorados), medio: Math.round(medioScenario.ingresos_mejorados), optimista: Math.round(optimistaScenario.ingresos_mejorados), isCurrency: true },
+    { metric: "Tasa de asistencia", actual: tasaAsistenciaActual, base: tasaAsistenciaMejorada, medio: tasaAsistenciaMejorada, optimista: tasaAsistenciaMejorada, format: "percent" as const },
+    { metric: "Llamadas agendadas", actual: Math.round(llamadas_agendadas), base: Math.round(baseScenario.agendados_mejorados), medio: Math.round(medioScenario.agendados_mejorados), optimista: Math.round(optimistaScenario.agendados_mejorados), format: "number" as const },
+    { metric: "Se presentan", actual: Math.round(presentados_actuales), base: Math.round(baseScenario.presentados_mejorados), medio: Math.round(medioScenario.presentados_mejorados), optimista: Math.round(optimistaScenario.presentados_mejorados), format: "number" as const },
+    { metric: "Cierres", actual: Math.round(cierres_actuales), base: Math.round(baseScenario.cierres_mejorados), medio: Math.round(medioScenario.cierres_mejorados), optimista: Math.round(optimistaScenario.cierres_mejorados), format: "number" as const },
+    { metric: "Ingresos mensuales", actual: Math.round(ingresos_actuales), base: Math.round(baseScenario.ingresos_mejorados), medio: Math.round(medioScenario.ingresos_mejorados), optimista: Math.round(optimistaScenario.ingresos_mejorados), format: "currency" as const },
   ];
+
+  const formatTableValue = (value: number, format: string) => {
+    if (format === "currency") return formatCurrency(value);
+    if (format === "percent") return value.toFixed(1).replace(".", ",") + "%";
+    return formatNumber(value);
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
@@ -170,7 +178,7 @@ export function LeadsResults({
         {/* Tarjeta KPI 1 — Potencial de mejora mensual */}
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-4 md:mb-6">
               <div className="p-4 rounded-2xl bg-[#4A6741]/10 text-[#4A6741]">
                 <Rocket size={24} />
               </div>
@@ -182,7 +190,7 @@ export function LeadsResults({
               <h3 className="text-4xl font-black text-foreground tracking-tight">
                 +<AnimatedNumber value={medioScenario.beneficio} formatter={formatCurrency} />
               </h3>
-              <p className="text-sm text-muted-foreground mt-3">
+              <p className="text-sm text-muted-foreground mt-2 md:mt-3">
                 Con captación y asistencia optimizadas
               </p>
             </div>
@@ -192,7 +200,7 @@ export function LeadsResults({
         {/* Tarjeta KPI 2 — Pérdida por no optimizar */}
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-4 md:mb-6">
               <div className="p-4 rounded-2xl bg-[#B53032]/10 text-[#B53032]">
                 <AlertCircle size={24} />
               </div>
@@ -204,7 +212,7 @@ export function LeadsResults({
               <h3 className="text-4xl font-black text-[#B53032] tracking-tight">
                 <AnimatedNumber value={baseScenario.beneficio} formatter={formatCurrency} />
               </h3>
-              <p className="text-sm text-[#B53032]/60 mt-3">
+              <p className="text-sm text-[#B53032]/60 mt-2 md:mt-3">
                 Mínimo mensual sin optimizar tu funnel
               </p>
             </div>
@@ -214,20 +222,20 @@ export function LeadsResults({
         {/* Tarjeta KPI 3 — Más llamadas agendadas */}
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-5 md:mb-8">
               <div className="p-4 rounded-2xl bg-[#345D36]/10 text-[#345D36]">
                 <Phone size={24} />
               </div>
               <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                Llamadas adicionales
+                Llamadas con asistencia
               </span>
             </div>
             <div>
               <h3 className="text-4xl font-black text-foreground tracking-tight">
                 +<AnimatedNumber value={extraLlamadasMedio} formatter={formatNumber} />
               </h3>
-              <p className="text-sm text-muted-foreground mt-3">
-                Más agendadas al mes en escenario medio
+              <p className="text-sm text-muted-foreground mt-2 md:mt-3">
+                Más agendadas y mejor asistencia al mes
               </p>
             </div>
           </CardContent>
@@ -250,16 +258,16 @@ export function LeadsResults({
                   <Info size={20} className="text-muted-foreground" />
                 </button>
               </TooltipTrigger>
-              <TooltipContent side="left" className="w-[520px] max-w-[520px] p-0 bg-background border shadow-xl rounded-2xl overflow-hidden">
+              <TooltipContent side="left" className="w-[540px] max-w-[540px] p-0 bg-background border border-[#B53032]/20 shadow-xl rounded-2xl overflow-hidden">
                 <div className="p-4">
-                  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
+                  <p className="text-xs font-bold uppercase tracking-wider text-[#B53032] mb-3">
                     Desglose de cálculos por escenario
                   </p>
                   <div className="overflow-x-auto">
                     <table className="w-full text-xs">
                       <thead>
-                        <tr className="border-b border-border">
-                          <th className="text-left py-2 px-2 font-bold text-muted-foreground uppercase tracking-wider">Métrica</th>
+                        <tr className="border-b border-[#B53032]/20">
+                          <th className="text-left py-2 px-2 font-bold text-[#B53032] uppercase tracking-wider">Métrica</th>
                           <th className="text-right py-2 px-2 font-bold text-muted-foreground uppercase tracking-wider">Actual</th>
                           <th className="text-right py-2 px-2 font-bold text-[#8BA882] uppercase tracking-wider">Base +30%</th>
                           <th className="text-right py-2 px-2 font-bold text-[#6B8F62] uppercase tracking-wider">Medio +42,5%</th>
@@ -268,26 +276,26 @@ export function LeadsResults({
                       </thead>
                       <tbody>
                         {tableRows.map((row, idx) => (
-                          <tr key={idx} className={idx % 2 === 0 ? "bg-muted/30" : ""}>
-                            <td className="py-2 px-2 font-medium text-foreground">{row.metric}</td>
+                          <tr key={idx} className={idx % 2 === 0 ? "bg-[#B53032]/[0.02]" : ""}>
+                            <td className="py-2 px-2 font-medium text-[#B53032]">{row.metric}</td>
                             <td className="text-right py-2 px-2 text-muted-foreground font-mono">
-                              {row.isCurrency ? formatCurrency(row.actual) : formatNumber(row.actual)}
+                              {formatTableValue(row.actual, row.format)}
                             </td>
                             <td className="text-right py-2 px-2 text-muted-foreground font-mono">
-                              {row.isCurrency ? formatCurrency(row.base) : formatNumber(row.base)}
+                              {formatTableValue(row.base, row.format)}
                             </td>
                             <td className="text-right py-2 px-2 text-muted-foreground font-mono">
-                              {row.isCurrency ? formatCurrency(row.medio) : formatNumber(row.medio)}
+                              {formatTableValue(row.medio, row.format)}
                             </td>
                             <td className="text-right py-2 px-2 text-muted-foreground font-mono">
-                              {row.isCurrency ? formatCurrency(row.optimista) : formatNumber(row.optimista)}
+                              {formatTableValue(row.optimista, row.format)}
                             </td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
                   </div>
-                  <div className="mt-3 pt-3 border-t border-border/50 text-[10px] text-muted-foreground">
+                  <div className="mt-3 pt-3 border-t border-[#B53032]/10 text-[10px] text-[#B53032]/70">
                     <p>Leads mensuales: {formatNumber(leads_mensuales)} · No Show: {noshow}% · Ticket: {formatCurrency(ticket)} · Cierre: {cierre}%</p>
                   </div>
                 </div>
@@ -493,7 +501,7 @@ export function LeadsResults({
                   </div>
                   <div>
                     <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Tasa de asistencia</p>
-                    <p className="text-lg font-black text-foreground">{tasaAsistencia}%</p>
+                    <p className="text-lg font-black text-foreground">{tasaAsistenciaMejorada.toFixed(1).replace(".", ",")}%</p>
                   </div>
                   <div>
                     <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Ingresos proyectados</p>

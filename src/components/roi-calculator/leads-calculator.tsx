@@ -57,7 +57,8 @@ export function LeadsCalculator() {
   const calculateScenario = (factor: number) => {
     const booking_mejorado = booking_rate_actual * factor;
     const agendados_mejorados = leads_mensuales * booking_mejorado;
-    const presentados_mejorados = agendados_mejorados * (1 - noshow_decimal);
+    const noshow_mejorado = noshow_decimal * (1 - 0.20);
+    const presentados_mejorados = agendados_mejorados * (1 - noshow_mejorado);
     const cierres_mejorados = presentados_mejorados * cierre_decimal;
     const ingresos_mejorados = cierres_mejorados * ticket;
     const beneficio = ingresos_mejorados - ingresos_actuales;
