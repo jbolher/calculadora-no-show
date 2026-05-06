@@ -78,6 +78,7 @@ export function LeadsResults({
   };
 
   const extraLlamadasMedio = Math.round(medioScenario.agendados_mejorados - llamadas_agendadas);
+  const tasaAsistencia = 100 - noshow;
 
   // Datos para el gráfico de volumen (llamadas, presentados, cierres)
   const volumeData = [
@@ -169,8 +170,8 @@ export function LeadsResults({
         {/* Tarjeta KPI 1 — Potencial de mejora mensual */}
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-2xl bg-[#4A6741]/10 text-[#4A6741]">
+            <div className="flex items-center justify-between mb-6">
+              <div className="p-4 rounded-2xl bg-[#4A6741]/10 text-[#4A6741]">
                 <Rocket size={24} />
               </div>
               <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
@@ -181,7 +182,7 @@ export function LeadsResults({
               <h3 className="text-4xl font-black text-foreground tracking-tight">
                 +<AnimatedNumber value={medioScenario.beneficio} formatter={formatCurrency} />
               </h3>
-              <p className="text-sm text-muted-foreground mt-2">
+              <p className="text-sm text-muted-foreground mt-3">
                 Con captación y asistencia optimizadas
               </p>
             </div>
@@ -191,8 +192,8 @@ export function LeadsResults({
         {/* Tarjeta KPI 2 — Pérdida por no optimizar */}
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-2xl bg-[#B53032]/10 text-[#B53032]">
+            <div className="flex items-center justify-between mb-6">
+              <div className="p-4 rounded-2xl bg-[#B53032]/10 text-[#B53032]">
                 <AlertCircle size={24} />
               </div>
               <span className="text-[10px] font-bold uppercase tracking-widest text-[#B53032]/70">
@@ -203,7 +204,7 @@ export function LeadsResults({
               <h3 className="text-4xl font-black text-[#B53032] tracking-tight">
                 <AnimatedNumber value={baseScenario.beneficio} formatter={formatCurrency} />
               </h3>
-              <p className="text-sm text-[#B53032]/60 mt-2">
+              <p className="text-sm text-[#B53032]/60 mt-3">
                 Mínimo mensual sin optimizar tu funnel
               </p>
             </div>
@@ -213,8 +214,8 @@ export function LeadsResults({
         {/* Tarjeta KPI 3 — Más llamadas agendadas */}
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-2xl bg-[#345D36]/10 text-[#345D36]">
+            <div className="flex items-center justify-between mb-8">
+              <div className="p-4 rounded-2xl bg-[#345D36]/10 text-[#345D36]">
                 <Phone size={24} />
               </div>
               <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
@@ -225,7 +226,7 @@ export function LeadsResults({
               <h3 className="text-4xl font-black text-foreground tracking-tight">
                 +<AnimatedNumber value={extraLlamadasMedio} formatter={formatNumber} />
               </h3>
-              <p className="text-sm text-muted-foreground mt-2">
+              <p className="text-sm text-muted-foreground mt-3">
                 Más agendadas al mes en escenario medio
               </p>
             </div>
@@ -246,7 +247,7 @@ export function LeadsResults({
             <Tooltip>
               <TooltipTrigger asChild>
                 <button className="p-2 rounded-full hover:bg-muted transition-colors">
-                  <Info size={18} className="text-muted-foreground" />
+                  <Info size={20} className="text-muted-foreground" />
                 </button>
               </TooltipTrigger>
               <TooltipContent side="left" className="w-[520px] max-w-[520px] p-0 bg-background border shadow-xl rounded-2xl overflow-hidden">
@@ -435,7 +436,7 @@ export function LeadsResults({
       </Card>
 
       {/* ═══════════════════════════════════════════════════════
-          SECCIÓN 3: Escenarios de mejora (igual que Asistencia)
+          SECCIÓN 3: Escenarios de mejora
           ═══════════════════════════════════════════════════════ */}
       <div className="space-y-4">
         <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60 px-2">
@@ -443,9 +444,36 @@ export function LeadsResults({
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
-            { label: "Base", percentage: "+30%", value: baseScenario.beneficio, icon: ShieldCheck, color: "text-[#5F8649]", bg: "bg-[#5F8649]/10", desc: "Mínimo garantizado" },
-            { label: "Medio", percentage: "+42,5%", value: medioScenario.beneficio, icon: Wallet, color: "text-[#4A6741]", bg: "bg-[#4A6741]/10", desc: "Resultado esperado" },
-            { label: "Optimista", percentage: "+55%", value: optimistaScenario.beneficio, icon: Rocket, color: "text-[#2F2B2B]", bg: "bg-[#2F2B2B]/10", desc: "Máximo potencial" },
+            {
+              label: "Base",
+              factor: "+30%",
+              booking: baseScenario.booking_mejorado,
+              beneficio: baseScenario.beneficio,
+              ingresos: baseScenario.ingresos_mejorados,
+              icon: ShieldCheck,
+              color: "text-[#5F8649]",
+              bg: "bg-[#5F8649]/10",
+            },
+            {
+              label: "Medio",
+              factor: "+42,5%",
+              booking: medioScenario.booking_mejorado,
+              beneficio: medioScenario.beneficio,
+              ingresos: medioScenario.ingresos_mejorados,
+              icon: Wallet,
+              color: "text-[#4A6741]",
+              bg: "bg-[#4A6741]/10",
+            },
+            {
+              label: "Optimista",
+              factor: "+55%",
+              booking: optimistaScenario.booking_mejorado,
+              beneficio: optimistaScenario.beneficio,
+              ingresos: optimistaScenario.ingresos_mejorados,
+              icon: Rocket,
+              color: "text-[#2F2B2B]",
+              bg: "bg-[#2F2B2B]/10",
+            },
           ].map((s, i) => (
             <Card key={i} className="border-none shadow-2xl bg-background rounded-2xl hover:translate-y-[-4px] transition-all duration-300">
               <CardContent className="p-6">
@@ -455,13 +483,30 @@ export function LeadsResults({
                   </div>
                   <div className="flex flex-col">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{s.label}</span>
-                    <span className={`text-[10px] font-bold ${s.color}`}>{s.percentage}</span>
+                    <span className={`text-[10px] font-bold ${s.color}`}>{s.factor}</span>
                   </div>
                 </div>
-                <p className="text-2xl font-black text-foreground">
-                  <AnimatedNumber value={s.value} formatter={formatCurrency} />
-                </p>
-                <p className="text-[10px] text-muted-foreground mt-1">{s.desc}</p>
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Booking rate mejorado</p>
+                    <p className="text-lg font-black text-foreground">{formatPercent(s.booking)}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Tasa de asistencia</p>
+                    <p className="text-lg font-black text-foreground">{tasaAsistencia}%</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Ingresos proyectados</p>
+                    <p className="text-lg font-black text-foreground">
+                      <AnimatedNumber value={s.ingresos} formatter={formatCurrency} />
+                      <span className="text-xs font-medium text-muted-foreground">/mes</span>
+                    </p>
+                  </div>
+                  <div className="pt-2 border-t border-border/10">
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Diferencia mensual</p>
+                    <p className="text-2xl font-black text-foreground">+<AnimatedNumber value={s.beneficio} formatter={formatCurrency} /></p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           ))}
