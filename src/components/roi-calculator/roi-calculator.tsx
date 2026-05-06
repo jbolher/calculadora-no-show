@@ -6,21 +6,23 @@ import { Button } from "@/components/ui/button";
 import { NoShowCalculator } from "./no-show-calculator";
 import { LeadsCalculator } from "./leads-calculator";
 import { ArrowRight } from "lucide-react";
-import { BookingModal } from "./booking-modal";
+
+const BOOKING_URL = "https://vsl.bolherconsulting.com/vsl-1?utm_medium=leadmagnet&utm_content=calculadora-noshow#calendar-YaKfIuQyV2";
 
 export function RoiCalculator() {
   return (
     <Tabs defaultValue="noshow" className="w-full">
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
-        <BookingModal>
-          <Button
-            size="lg"
-            className="h-12 px-6 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-sm shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300 shrink-0 order-first md:order-none"
-          >
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 md:gap-4 mb-8">
+        <Button
+          asChild
+          size="lg"
+          className="h-12 px-6 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-sm shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300 shrink-0 order-first md:order-none"
+        >
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
             <span>Agendar llamada</span>
             <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform duration-300" size={16} />
-          </Button>
-        </BookingModal>
+          </a>
+        </Button>
         <TabsList className="w-full md:w-auto max-w-md bg-background/50 p-1 rounded-2xl border border-border/20">
           <TabsTrigger 
             value="noshow" 

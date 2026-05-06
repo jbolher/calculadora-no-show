@@ -15,7 +15,8 @@ import {
 import { Rocket, AlertCircle, TrendingUp, ShieldCheck, Wallet, Info, Phone, Users, ArrowRight } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { AnimatedNumber } from "./animated-number";
-import { BookingModal } from "./booking-modal";
+
+const BOOKING_URL = "https://vsl.bolherconsulting.com/vsl-1?utm_medium=leadmagnet&utm_content=calculadora-noshow#calendar-YaKfIuQyV2";
 
 interface ScenarioData {
   booking_mejorado: number;
@@ -545,15 +546,16 @@ export function LeadsResults({
 
       {/* CTA */}
       <div className="flex justify-center pt-4">
-        <BookingModal size="lg">
-          <Button
-            size="lg"
-            className="h-16 px-10 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-lg shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300"
-          >
+        <Button
+          asChild
+          size="lg"
+          className="h-16 px-10 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-lg shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300"
+        >
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
             <span>Agendar llamada y recuperar ingresos</span>
             <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform duration-300" size={20} />
-          </Button>
-        </BookingModal>
+          </a>
+        </Button>
       </div>
     </div>
   );

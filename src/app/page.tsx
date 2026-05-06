@@ -13,7 +13,7 @@ export default function RoiCalculatorPage() {
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/10">
       <div className="max-w-6xl mx-auto px-6 py-12 md:py-20">
-        <header className="mb-16 flex flex-col gap-6">
+        <header className="mb-4 flex flex-col gap-6">
           <div className="text-left space-y-4">
             <div className="inline-block px-4 py-1.5 rounded-full bg-primary/5 text-primary text-[10px] font-bold uppercase tracking-[0.2em]">
               Calculadora de Impacto IA

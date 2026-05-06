@@ -5,8 +5,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import { TrendingUp, AlertCircle, ShieldCheck, Rocket, Wallet, ArrowRight } from "lucide-react";
 import { AnimatedNumber } from "./animated-number";
-import { BookingModal } from "./booking-modal";
 import { Button } from "@/components/ui/button";
+
+const BOOKING_URL = "https://vsl.bolherconsulting.com/vsl-1?utm_medium=leadmagnet&utm_content=calculadora-noshow#calendar-YaKfIuQyV2";
 
 interface RoiResultsProps {
   moneyLostMonthly: number;
@@ -173,15 +174,16 @@ export function RoiResults({
 
       {/* CTA */}
       <div className="flex justify-center pt-4">
-        <BookingModal size="lg">
-          <Button
-            size="lg"
-            className="h-16 px-10 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-lg shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300"
-          >
+        <Button
+          asChild
+          size="lg"
+          className="h-16 px-10 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-lg shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300"
+        >
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
             <span>Agendar llamada y recuperar ingresos</span>
             <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform duration-300" size={20} />
-          </Button>
-        </BookingModal>
+          </a>
+        </Button>
       </div>
     </div>
   );
