@@ -156,8 +156,8 @@ export function LeadsResults({
 
   // Datos para la tabla de cálculos
   const tableRows = [
-    { metric: "Tasa de asistencia", actual: tasaAsistenciaActual, base: tasaAsistenciaMejorada, medio: tasaAsistenciaMejorada, optimista: tasaAsistenciaMejorada, format: "percent" as const },
     { metric: "Llamadas agendadas", actual: Math.round(llamadas_agendadas), base: Math.round(baseScenario.agendados_mejorados), medio: Math.round(medioScenario.agendados_mejorados), optimista: Math.round(optimistaScenario.agendados_mejorados), format: "number" as const },
+    { metric: "Tasa de asistencia", actual: tasaAsistenciaActual, base: tasaAsistenciaMejorada, medio: tasaAsistenciaMejorada, optimista: tasaAsistenciaMejorada, format: "percent" as const },
     { metric: "Se presentan", actual: Math.round(presentados_actuales), base: Math.round(baseScenario.presentados_mejorados), medio: Math.round(medioScenario.presentados_mejorados), optimista: Math.round(optimistaScenario.presentados_mejorados), format: "number" as const },
     { metric: "Cierres", actual: Math.round(cierres_actuales), base: Math.round(baseScenario.cierres_mejorados), medio: Math.round(medioScenario.cierres_mejorados), optimista: Math.round(optimistaScenario.cierres_mejorados), format: "number" as const },
     { metric: "Ingresos mensuales", actual: Math.round(ingresos_actuales), base: Math.round(baseScenario.ingresos_mejorados), medio: Math.round(medioScenario.ingresos_mejorados), optimista: Math.round(optimistaScenario.ingresos_mejorados), format: "currency" as const },
@@ -253,9 +253,14 @@ export function LeadsResults({
               </span>
             </div>
             <div>
-              <h3 className="text-4xl font-black text-foreground tracking-tight">
-                +20%
-              </h3>
+              <div className="flex items-baseline gap-2">
+                <h3 className="text-4xl font-black text-foreground tracking-tight">
+                  +20%
+                </h3>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#5F8649] bg-[#5F8649]/10 px-2 py-0.5 rounded-full">
+                  Como mínimo
+                </span>
+              </div>
               <p className="text-sm text-muted-foreground mt-2 md:mt-3">
                 De {tasaAsistenciaActual.toFixed(0)}% a {tasaAsistenciaMejorada.toFixed(0)}%
               </p>
