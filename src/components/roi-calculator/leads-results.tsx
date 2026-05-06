@@ -11,7 +11,7 @@ import {
   Tooltip as RechartsTooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Rocket, AlertCircle, TrendingUp, ShieldCheck, Wallet, Info, Phone } from "lucide-react";
+import { Rocket, AlertCircle, TrendingUp, ShieldCheck, Wallet, Info, Phone, Users } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { AnimatedNumber } from "./animated-number";
 
@@ -172,9 +172,9 @@ export function LeadsResults({
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
       {/* ═══════════════════════════════════════════════════════
-          SECCIÓN 1: Tres tarjetas KPI lado a lado
+          SECCIÓN 1: Cuatro tarjetas KPI
           ═══════════════════════════════════════════════════════ */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         {/* Tarjeta KPI 1 — Potencial de mejora mensual */}
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
@@ -219,15 +219,15 @@ export function LeadsResults({
           </CardContent>
         </Card>
 
-        {/* Tarjeta KPI 3 — Más llamadas agendadas */}
+        {/* Tarjeta KPI 3 — Llamadas agendadas */}
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
-            <div className="flex items-center justify-between mb-5 md:mb-8">
+            <div className="flex items-center justify-between mb-4 md:mb-6">
               <div className="p-4 rounded-2xl bg-[#345D36]/10 text-[#345D36]">
                 <Phone size={24} />
               </div>
               <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                Llamadas con asistencia
+                Llamadas agendadas
               </span>
             </div>
             <div>
@@ -235,7 +235,29 @@ export function LeadsResults({
                 +<AnimatedNumber value={extraLlamadasMedio} formatter={formatNumber} />
               </h3>
               <p className="text-sm text-muted-foreground mt-2 md:mt-3">
-                Más agendadas y mejor asistencia al mes
+                Agendadas
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Tarjeta KPI 4 — Mejora en asistencia */}
+        <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
+          <CardContent className="p-8 flex flex-col justify-between h-full">
+            <div className="flex items-center justify-between mb-4 md:mb-6">
+              <div className="p-4 rounded-2xl bg-[#5F8649]/10 text-[#5F8649]">
+                <Users size={24} />
+              </div>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                Mejora en asistencia
+              </span>
+            </div>
+            <div>
+              <h3 className="text-4xl font-black text-foreground tracking-tight">
+                +20%
+              </h3>
+              <p className="text-sm text-muted-foreground mt-2 md:mt-3">
+                De {tasaAsistenciaActual.toFixed(0)}% a {tasaAsistenciaMejorada.toFixed(0)}%
               </p>
             </div>
           </CardContent>
