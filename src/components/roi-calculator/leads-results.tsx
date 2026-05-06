@@ -77,7 +77,7 @@ export function LeadsResults({
   };
 
   const formatPercent = (value: number) => {
-    return (value * 100).toFixed(1).replace(".", ",") + "%";
+    return (value * 100).toFixed(2).replace(".", ",") + "%";
   };
 
   const extraLlamadasMedio = Math.round(medioScenario.agendados_mejorados - llamadas_agendadas);
@@ -157,7 +157,7 @@ export function LeadsResults({
 
   const tableRows = [
     { metric: "Llamadas agendadas", actual: Math.round(llamadas_agendadas), base: Math.round(baseScenario.agendados_mejorados), medio: Math.round(medioScenario.agendados_mejorados), optimista: Math.round(optimistaScenario.agendados_mejorados), format: "number" as const },
-    { metric: "Tasa de asistencia", actual: tasaAsistenciaActual, base: tasaAsistenciaMejorada, medio: tasaAsistenciaMejorada, optimista: tasaAsistenciaMejorada, format: "decimal" as const },
+    { metric: "Tasa de asistencia", actual: tasaAsistenciaActual, base: tasaAsistenciaMejorada, medio: tasaAsistenciaMejorada, optimista: tasaAsistenciaMejorada, format: "percent" as const },
     { metric: "Se presentan", actual: Math.round(presentados_actuales), base: Math.round(baseScenario.presentados_mejorados), medio: Math.round(medioScenario.presentados_mejorados), optimista: Math.round(optimistaScenario.presentados_mejorados), format: "number" as const },
     { metric: "Cierres", actual: Math.round(cierres_actuales), base: Math.round(baseScenario.cierres_mejorados), medio: Math.round(medioScenario.cierres_mejorados), optimista: Math.round(optimistaScenario.cierres_mejorados), format: "number" as const },
     { metric: "Ticket medio", actual: ticket, base: ticket, medio: ticket, optimista: ticket, format: "currency" as const },
@@ -166,8 +166,8 @@ export function LeadsResults({
 
   const formatTableValue = (value: number, format: string) => {
     if (format === "currency") return formatCurrency(value);
-    if (format === "percent") return value.toFixed(1).replace(".", ",") + "%";
-    if (format === "decimal") return (value / 100).toFixed(1).replace(".", ",");
+    if (format === "percent") return value.toFixed(2).replace(".", ",") + "%";
+    if (format === "decimal") return (value / 100).toFixed(2).replace(".", ",");
     return formatNumber(value);
   };
 
@@ -262,7 +262,7 @@ export function LeadsResults({
                 </span>
               </div>
               <p className="text-sm text-muted-foreground mt-3">
-                De {tasaAsistenciaActual.toFixed(0)}% a {tasaAsistenciaMejorada.toFixed(0)}%
+                De {tasaAsistenciaActual.toFixed(2)}% a {tasaAsistenciaMejorada.toFixed(2)}%
               </p>
             </div>
           </CardContent>
@@ -293,10 +293,11 @@ export function LeadsResults({
                   <p className="text-xs font-bold uppercase tracking-wider text-[#B53032] mb-3">
                     Desglose de cálculos por escenario
                   </p>
+                  <div className="w-full h-px bg-[#B53032]/30 shadow-[0_1px_4px_rgba(181,48,50,0.15)] mb-3" />
                   <div className="overflow-x-auto">
                     <table className="w-full text-xs">
                       <thead>
-                        <tr className="border-b border-[#B53032]/20">
+                        <tr className="border-b-2 border-[#B53032]/20 shadow-[0_2px_4px_rgba(181,48,50,0.08)]">
                           <th className="text-left py-2 px-2 font-bold text-[#B53032] uppercase tracking-wider">Métrica</th>
                           <th className="text-right py-2 px-2 font-bold text-muted-foreground uppercase tracking-wider">Actual</th>
                           <th className="text-right py-2 px-2 font-bold text-[#8BA882] uppercase tracking-wider">Base +30%</th>
@@ -325,8 +326,8 @@ export function LeadsResults({
                       </tbody>
                     </table>
                   </div>
-                  <div className="mt-3 pt-3 border-t border-[#B53032]/10 text-[10px] text-[#B53032]/70">
-                    <p>Leads mensuales: {formatNumber(leads_mensuales)} · Asistencia actual: {tasaAsistenciaActual.toFixed(0)}% · Asistencia mejorada: {tasaAsistenciaMejorada.toFixed(0)}% · Ticket: {formatCurrency(ticket)} · Cierre: {cierre}%</p>
+                  <div className="mt-3 pt-3 border-t border-[#B53032]/20 shadow-[0_-1px_3px_rgba(181,48,50,0.08)] text-[10px] text-[#B53032]/70">
+                    <p>Leads mensuales: {formatNumber(leads_mensuales)} · Asistencia actual: {tasaAsistenciaActual.toFixed(2)}% · Asistencia mejorada: {tasaAsistenciaMejorada.toFixed(2)}% · Ticket: {formatCurrency(ticket)} · Cierre: {cierre}%</p>
                   </div>
                 </div>
               </PopoverContent>
@@ -529,7 +530,7 @@ export function LeadsResults({
                   </div>
                   <div>
                     <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Tasa de asistencia</p>
-                    <p className="text-lg font-black text-foreground">{tasaAsistenciaMejorada.toFixed(1).replace(".", ",")}%</p>
+                    <p className="text-lg font-black text-foreground">{tasaAsistenciaMejorada.toFixed(2).replace(".", ",")}%</p>
                   </div>
                   <div>
                     <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Ingresos proyectados</p>
@@ -538,7 +539,7 @@ export function LeadsResults({
                       <span className="text-xs font-medium text-muted-foreground">/mes</span>
                     </p>
                   </div>
-                  <div className="pt-2 border-t border-border/10">
+                  <div className="pt-2 border-t-2 border-[#B53032]/20 shadow-[0_-1px_4px_rgba(181,48,50,0.08)]">
                     <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Diferencia mensual</p>
                     <p className="text-2xl font-black text-foreground">+<AnimatedNumber value={s.beneficio} formatter={formatCurrency} /></p>
                   </div>
