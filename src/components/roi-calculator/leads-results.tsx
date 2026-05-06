@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import {
   BarChart,
   Bar,
@@ -12,7 +11,7 @@ import {
   Tooltip as RechartsTooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Rocket, AlertCircle, TrendingUp, ShieldCheck, Wallet, Info, Phone, Users, ArrowRight } from "lucide-react";
+import { Rocket, AlertCircle, TrendingUp, ShieldCheck, Wallet, Info, Phone, Users } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { AnimatedNumber } from "./animated-number";
 
@@ -82,7 +81,6 @@ export function LeadsResults({
   const tasaAsistenciaActual = 100 - noshow;
   const tasaAsistenciaMejorada = 100 - (noshow * 0.8);
 
-  // Datos para el gráfico de volumen (llamadas, presentados, cierres)
   const volumeData = [
     {
       name: "Llamadas agendadas",
@@ -107,7 +105,6 @@ export function LeadsResults({
     },
   ];
 
-  // Datos para el gráfico de ingresos
   const revenueData = [
     {
       name: "Ingresos mensuales",
@@ -155,30 +152,27 @@ export function LeadsResults({
     return null;
   };
 
-  // Datos para la tabla de cálculos
   const tableRows = [
     { metric: "Llamadas agendadas", actual: Math.round(llamadas_agendadas), base: Math.round(baseScenario.agendados_mejorados), medio: Math.round(medioScenario.agendados_mejorados), optimista: Math.round(optimistaScenario.agendados_mejorados), format: "number" as const },
-    { metric: "Tasa de asistencia", actual: tasaAsistenciaActual, base: tasaAsistenciaMejorada, medio: tasaAsistenciaMejorada, optimista: tasaAsistenciaMejorada, format: "percent" as const },
+    { metric: "Tasa de asistencia", actual: tasaAsistenciaActual, base: tasaAsistenciaMejorada, medio: tasaAsistenciaMejorada, optimista: tasaAsistenciaMejorada, format: "decimal" as const },
     { metric: "Se presentan", actual: Math.round(presentados_actuales), base: Math.round(baseScenario.presentados_mejorados), medio: Math.round(medioScenario.presentados_mejorados), optimista: Math.round(optimistaScenario.presentados_mejorados), format: "number" as const },
     { metric: "Cierres", actual: Math.round(cierres_actuales), base: Math.round(baseScenario.cierres_mejorados), medio: Math.round(medioScenario.cierres_mejorados), optimista: Math.round(optimistaScenario.cierres_mejorados), format: "number" as const },
+    { metric: "Ticket medio", actual: ticket, base: ticket, medio: ticket, optimista: ticket, format: "currency" as const },
     { metric: "Ingresos mensuales", actual: Math.round(ingresos_actuales), base: Math.round(baseScenario.ingresos_mejorados), medio: Math.round(medioScenario.ingresos_mejorados), optimista: Math.round(optimistaScenario.ingresos_mejorados), format: "currency" as const },
   ];
 
   const formatTableValue = (value: number, format: string) => {
     if (format === "currency") return formatCurrency(value);
     if (format === "percent") return value.toFixed(1).replace(".", ",") + "%";
+    if (format === "decimal") return (value / 100).toFixed(1).replace(".", ",");
     return formatNumber(value);
   };
 
-  const demoUrl = "https://vsl.bolherconsulting.com/vsl-1?utm_medium=leadmagnet&utm_content=calculadora-noshow";
-
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-      {/* ═══════════════════════════════════════════════════════
-          SECCIÓN 1: Cuatro tarjetas KPI en grid 2x2
-          ═══════════════════════════════════════════════════════ */}
+      {/* Cuatro tarjetas KPI en grid 2x2 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Tarjeta KPI 1 — Potencial de mejora mensual */}
+        {/* Tarjeta KPI 1 */}
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
             <div className="flex items-center justify-between mb-6">
@@ -200,7 +194,7 @@ export function LeadsResults({
           </CardContent>
         </Card>
 
-        {/* Tarjeta KPI 2 — Pérdida por no optimizar */}
+        {/* Tarjeta KPI 2 */}
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
             <div className="flex items-center justify-between mb-6">
@@ -222,7 +216,7 @@ export function LeadsResults({
           </CardContent>
         </Card>
 
-        {/* Tarjeta KPI 3 — Llamadas agendadas */}
+        {/* Tarjeta KPI 3 */}
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
             <div className="flex items-center justify-between mb-6">
@@ -244,7 +238,7 @@ export function LeadsResults({
           </CardContent>
         </Card>
 
-        {/* Tarjeta KPI 4 — Mejora en asistencia */}
+        {/* Tarjeta KPI 4 */}
         <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden group hover:shadow-md transition-all duration-300">
           <CardContent className="p-8 flex flex-col justify-between h-full">
             <div className="flex items-center justify-between mb-6">
@@ -272,9 +266,7 @@ export function LeadsResults({
         </Card>
       </div>
 
-      {/* ═══════════════════════════════════════════════════════
-          SECCIÓN 2: Gráfico de barras agrupadas
-          ═══════════════════════════════════════════════════════ */}
+      {/* Gráfico de barras agrupadas */}
       <Card className="border-none shadow-2xl bg-background rounded-3xl overflow-hidden">
         <CardContent className="p-8">
           <div className="flex items-center justify-between mb-6">
@@ -326,7 +318,7 @@ export function LeadsResults({
                     </table>
                   </div>
                   <div className="mt-3 pt-3 border-t border-[#B53032]/10 text-[10px] text-[#B53032]/70">
-                    <p>Leads mensuales: {formatNumber(leads_mensuales)} · No Show: {noshow}% · Ticket: {formatCurrency(ticket)} · Cierre: {cierre}%</p>
+                    <p>Leads mensuales: {formatNumber(leads_mensuales)} · Asistencia actual: {tasaAsistenciaActual.toFixed(0)}% · Asistencia mejorada: {tasaAsistenciaMejorada.toFixed(0)}% · Ticket: {formatCurrency(ticket)} · Cierre: {cierre}%</p>
                   </div>
                 </div>
               </TooltipContent>
@@ -346,7 +338,7 @@ export function LeadsResults({
             ))}
           </div>
 
-          {/* Gráfico de volumen: llamadas, presentados, cierres */}
+          {/* Gráfico de volumen */}
           <div className="h-[280px] w-full mb-8">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
@@ -407,7 +399,7 @@ export function LeadsResults({
             </ResponsiveContainer>
           </div>
 
-          {/* Gráfico de ingresos separado por diferencia de escala */}
+          {/* Gráfico de ingresos */}
           <div className="pt-6 border-t border-border/10">
             <div className="h-[200px] w-full">
               <ResponsiveContainer width="100%" height="100%">
@@ -473,9 +465,7 @@ export function LeadsResults({
         </CardContent>
       </Card>
 
-      {/* ═══════════════════════════════════════════════════════
-          SECCIÓN 3: Escenarios de mejora
-          ═══════════════════════════════════════════════════════ */}
+      {/* Escenarios de mejora */}
       <div className="space-y-4">
         <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60 px-2">
           Proyección de ingresos extra
@@ -549,21 +539,6 @@ export function LeadsResults({
             </Card>
           ))}
         </div>
-      </div>
-
-      {/* CTA */}
-      <div className="pt-4">
-        <Button
-          size="lg"
-          className="w-full h-16 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-lg shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300"
-          onClick={() => window.open(demoUrl, "_blank")}
-        >
-          <span>Agendar llamada y recuperar ingresos</span>
-          <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform duration-300" size={20} />
-        </Button>
-        <p className="text-center text-[10px] text-muted-foreground mt-4 uppercase tracking-widest">
-          Potencial total al 0% No-Show: <span className="font-bold text-foreground">{formatCurrency(medioScenario.ingresos_mejorados)}/mes</span>
-        </p>
       </div>
     </div>
   );
