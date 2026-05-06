@@ -3,8 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
-import { Button } from "@/components/ui/button";
-import { TrendingUp, AlertCircle, ArrowRight, ShieldCheck, Rocket, Wallet } from "lucide-react";
+import { TrendingUp, AlertCircle, ShieldCheck, Rocket, Wallet } from "lucide-react";
 import { AnimatedNumber } from "./animated-number";
 
 interface RoiResultsProps {
@@ -45,8 +44,6 @@ export function RoiResults({
     { name: "Actual", value: currentMonthlyRevenue, color: "#B53032" },
     { name: "Con IA", value: mediumScenarioMonthlyRevenue, color: "#345D36" },
   ];
-
-  const demoUrl = "https://vsl.bolherconsulting.com/vsl-1?utm_medium=leadmagnet&utm_content=calculadora-noshow";
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
@@ -170,21 +167,6 @@ export function RoiResults({
             </Card>
           ))}
         </div>
-      </div>
-
-      {/* CTA Section */}
-      <div className="pt-4">
-        <Button
-          size="lg"
-          className="w-full h-16 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-lg shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300"
-          onClick={() => window.open(demoUrl, "_blank")}
-        >
-          <span>Agendar llamada y recuperar ingresos</span>
-          <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform duration-300" size={20} />
-        </Button>
-        <p className="text-center text-[10px] text-muted-foreground mt-4 uppercase tracking-widest">
-          Potencial total al 0% No-Show: <span className="font-bold text-foreground">{formatCurrency(potentialRevenueAtZeroNoShow)}/mes</span>
-        </p>
       </div>
     </div>
   );
