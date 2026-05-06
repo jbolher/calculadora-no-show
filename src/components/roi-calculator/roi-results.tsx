@@ -147,9 +147,9 @@ export function RoiResults({
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
-            { label: "Conservador", value: conservativeScenario.extraMonthlyRevenue, icon: ShieldCheck, color: "text-[#B53032]", bg: "bg-[#B53032]/5", desc: "Mínimo garantizado" },
-            { label: "Probable", value: mediumScenario.extraMonthlyRevenue, icon: Wallet, color: "text-[#345D36]", bg: "bg-[#345D36]/10", desc: "Resultado esperado" },
-            { label: "Optimista", value: optimisticScenario.extraMonthlyRevenue, icon: Rocket, color: "text-[#5F8649]", bg: "bg-[#5F8649]/10", desc: "Máximo potencial" },
+            { label: "Conservador", percentage: "20%", value: conservativeScenario.extraMonthlyRevenue, icon: ShieldCheck, color: "text-[#B53032]", bg: "bg-[#B53032]/5", desc: "Mínimo garantizado" },
+            { label: "Probable", percentage: "40%", value: mediumScenario.extraMonthlyRevenue, icon: Wallet, color: "text-[#345D36]", bg: "bg-[#345D36]/10", desc: "Resultado esperado" },
+            { label: "Optimista", percentage: "80%", value: optimisticScenario.extraMonthlyRevenue, icon: Rocket, color: "text-[#5F8649]", bg: "bg-[#5F8649]/10", desc: "Máximo potencial" },
           ].map((s, i) => (
             <Card key={i} className="border-none shadow-2xl bg-background rounded-2xl hover:translate-y-[-4px] transition-all duration-300">
               <CardContent className="p-6">
@@ -157,7 +157,10 @@ export function RoiResults({
                   <div className={`p-2 rounded-xl ${s.bg} ${s.color}`}>
                     <s.icon size={16} />
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{s.label}</span>
+                  <div className="flex flex-col">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{s.label}</span>
+                    <span className={`text-[10px] font-bold ${s.color}`}>{s.percentage}</span>
+                  </div>
                 </div>
                 <p className="text-2xl font-black text-foreground">
                   <AnimatedNumber value={s.value} formatter={formatCurrency} />
