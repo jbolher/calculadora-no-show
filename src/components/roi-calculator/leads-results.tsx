@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
   BarChart,
   Bar,
@@ -11,7 +12,7 @@ import {
   Tooltip as RechartsTooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Rocket, AlertCircle, TrendingUp, ShieldCheck, Wallet, Info, Phone, Users } from "lucide-react";
+import { Rocket, AlertCircle, TrendingUp, ShieldCheck, Wallet, Info, Phone, Users, ArrowRight } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { AnimatedNumber } from "./animated-number";
 
@@ -38,6 +39,8 @@ interface LeadsResultsProps {
   medioScenario: ScenarioData;
   optimistaScenario: ScenarioData;
 }
+
+const demoUrl = "https://vsl.bolherconsulting.com/vsl-1?utm_medium=leadmagnet&utm_content=calculadora-noshow";
 
 export function LeadsResults({
   leads_mensuales,
@@ -539,6 +542,18 @@ export function LeadsResults({
             </Card>
           ))}
         </div>
+      </div>
+
+      {/* CTA */}
+      <div className="flex justify-center pt-4">
+        <Button
+          size="lg"
+          className="h-16 px-10 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-lg shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300"
+          onClick={() => window.open(demoUrl, "_blank")}
+        >
+          <span>Agendar llamada y recuperar ingresos</span>
+          <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform duration-300" size={20} />
+        </Button>
       </div>
     </div>
   );

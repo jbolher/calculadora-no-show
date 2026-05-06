@@ -14,10 +14,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { LeadsResults } from "./leads-results";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Info, ArrowRight } from "lucide-react";
+import { Info } from "lucide-react";
 
 const formSchema = z.object({
   leads_mensuales: z.coerce.number().min(0),
@@ -26,8 +25,6 @@ const formSchema = z.object({
   ticket: z.coerce.number().min(0),
   cierre: z.coerce.number().min(0).max(100),
 });
-
-const demoUrl = "https://vsl.bolherconsulting.com/vsl-1?utm_medium=leadmagnet&utm_content=calculadora-noshow";
 
 export function LeadsCalculator() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -225,15 +222,6 @@ export function LeadsCalculator() {
                   />
                 </form>
               </Form>
-
-              <Button
-                size="lg"
-                className="w-full h-16 rounded-2xl bg-[#2F2B2B] hover:bg-[#2F2B2B]/90 text-[#FDFDF0] font-bold text-lg shadow-lg shadow-[#2F2B2B]/20 group transition-all duration-300"
-                onClick={() => window.open(demoUrl, "_blank")}
-              >
-                <span>Agendar llamada y recuperar ingresos</span>
-                <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform duration-300" size={20} />
-              </Button>
             </CardContent>
           </Card>
         </div>
