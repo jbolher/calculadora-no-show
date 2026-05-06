@@ -21,7 +21,8 @@ export default function RoiCalculatorPage() {
             Calcula tu ROI <span className="text-[#345D36]">Potencial</span>
           </h1>
           <p className="text-muted-foreground max-w-xl text-sm md:text-base leading-relaxed">
-            Descubre cuánto dinero estás perdiendo por los No-Shows y cómo nuestra IA puede ayudarte a recuperarlo de forma automática.
+            De cada 100 leads, pocos agendan. De los que agendan, muchos no aparecen.
+            ¿Sabes cuánto dinero se queda en el camino? Introdúcelo aquí y descúbrelo.
           </p>
         </header>
         
